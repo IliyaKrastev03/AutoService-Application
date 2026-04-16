@@ -24,7 +24,7 @@ export default function VinSearch() {
 
     try {
       const response = await axios.get(
-        `https://localhost:7121/api/Vehicles/search/${vinQuery}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/search/${vinQuery}`,
       );
       setResult(response.data);
     } catch (err) {

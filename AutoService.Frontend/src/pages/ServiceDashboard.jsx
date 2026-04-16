@@ -12,7 +12,7 @@ export default function ServiceDashboard() {
   const fetchActiveRepairs = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:7121/api/Repairs/active",
+        "http://iliyaauto-001-site1.stempurl.com/api/Repairs/active",
       );
       setActiveRepairs(response.data);
     } catch (error) {
@@ -23,7 +23,7 @@ export default function ServiceDashboard() {
   const fetchMechanics = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:7121/api/Repairs/mechanics",
+        "http://iliyaauto-001-site1.stempurl.com/api/Repairs/mechanics",
       );
       setMechanics(response.data);
     } catch (error) {
@@ -40,7 +40,7 @@ export default function ServiceDashboard() {
     if (!mechanicName) return;
     try {
       await axios.put(
-        `https://localhost:7121/api/Repairs/${repairId}/assign`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${repairId}/assign`,
         JSON.stringify(mechanicName),
         {
           headers: { "Content-Type": "application/json" },

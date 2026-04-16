@@ -61,7 +61,7 @@ export default function CustomerProfile() {
   const fetchCustomer = async () => {
     try {
       const response = await axios.get(
-        `https://localhost:7121/api/Customers/${id}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Customers/${id}`,
       );
       setCustomer(response.data);
     } catch (error) {
@@ -88,7 +88,7 @@ export default function CustomerProfile() {
     e.preventDefault();
     try {
       await axios.put(
-        `https://localhost:7121/api/Customers/${id}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Customers/${id}`,
         editCustomerFormData,
       );
       alert("Данните на клиента са обновени успешно!");
@@ -103,7 +103,7 @@ export default function CustomerProfile() {
   const fetchRepairs = async (vehicleId) => {
     try {
       const response = await axios.get(
-        `https://localhost:7121/api/Repairs/vehicle/${vehicleId}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/vehicle/${vehicleId}`,
       );
       setVehicleRepairs(response.data);
     } catch (error) {
@@ -120,7 +120,7 @@ export default function CustomerProfile() {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7121/api/Vehicles", {
+      await axios.post("http://iliyaauto-001-site1.stempurl.com/api/Vehicles", {
         ...carFormData,
         customerId: parseInt(id),
         year: parseInt(carFormData.year),
@@ -147,7 +147,7 @@ export default function CustomerProfile() {
   const handleTransferVehicle = async () => {
     try {
       await axios.post(
-        `https://localhost:7121/api/Vehicles/${transferData.vin}/transfer/${transferData.newCustomerId}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/${transferData.vin}/transfer/${transferData.newCustomerId}`,
       );
       alert(
         "✅ Собствеността и историята са прехвърлени успешно към новия клиент!",
@@ -169,7 +169,7 @@ export default function CustomerProfile() {
       return;
     try {
       await axios.put(
-        `https://localhost:7121/api/Vehicles/${vehicleId}/archive`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/${vehicleId}/archive`,
       );
       alert("Автомобилът е премахнат успешно!");
       fetchCustomer();
@@ -182,7 +182,7 @@ export default function CustomerProfile() {
   const handleAddRepair = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7121/api/Repairs", {
+      await axios.post("http://iliyaauto-001-site1.stempurl.com/api/Repairs", {
         repairType: repairFormData.repairType,
         complaint: repairFormData.complaint,
         description: repairFormData.description,
@@ -251,7 +251,7 @@ export default function CustomerProfile() {
         })),
       };
       await axios.put(
-        `https://localhost:7121/api/Repairs/${costingRepair.id}/costing`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${costingRepair.id}/costing`,
         payload,
       );
       alert("Ремонтът е остойностен успешно!");
@@ -270,7 +270,9 @@ export default function CustomerProfile() {
     )
       return;
     try {
-      await axios.put(`https://localhost:7121/api/Repairs/${repairId}/pay`);
+      await axios.put(
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${repairId}/pay`,
+      );
       alert("✅ Успешно плащане! Ремонтът е приключен.");
       fetchRepairs(selectedVehicle.id);
     } catch (error) {
@@ -294,7 +296,6 @@ export default function CustomerProfile() {
   const previousVehicles =
     customer.previousVehicles || customer.PreviousVehicles || [];
 
-  // Проверяваме дали колата, чието досие е отворено, все още принадлежи на този клиент
   const isCurrentOwner =
     selectedVehicle && selectedVehicle.customerId === parseInt(id);
 
@@ -373,7 +374,6 @@ export default function CustomerProfile() {
           </div>
         </div>
 
-        {/* 🌟 НОВА СЕКЦИЯ: ПРЕДИШНИ (ПРЕХВЪРЛЕНИ) АВТОМОБИЛИ 🌟 */}
         {previousVehicles.length > 0 && (
           <div className="card-container previous-vehicles-container">
             <div className="card-header">
@@ -810,7 +810,6 @@ export default function CustomerProfile() {
                 <h3 className="modal-title-xl history-title-large">
                   🛠️ История на ремонтите
                 </h3>
-                {/* 🌟 БУТОНЪТ СЕ ПОКАЗВА САМО АКО КОЛАТА Е НА ТЕКУЩИЯ КЛИЕНТ 🌟 */}
                 {isCurrentOwner && (
                   <button
                     className="btn-add large-text"
@@ -873,7 +872,6 @@ export default function CustomerProfile() {
                           {repair.status}
                         </span>
 
-                        {/* БУТОНИТЕ ЗА ОСТОЙНОСТЯВАНЕ/ПЛАЩАНЕ СЕ ПОКАЗВАТ САМО АКО Е ТЕКУЩ СОБСТВЕНИК */}
                         {isCurrentOwner && repair.status !== "Завършен" && (
                           <button
                             className="action-btn-costing"

@@ -19,7 +19,7 @@ export default function MechanicDashboard() {
     if (!mechanicName) return;
     try {
       const response = await axios.get(
-        `https://localhost:7121/api/Repairs/mechanic/${mechanicName}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/mechanic/${mechanicName}`,
       );
       setTasks(response.data);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function MechanicDashboard() {
     if (!mechanicName) return;
     try {
       const response = await axios.get(
-        `https://localhost:7121/api/Dashboard/mechanic-stats/${mechanicName}`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Dashboard/mechanic-stats/${mechanicName}`,
       );
       setMyStats(response.data);
     } catch (error) {
@@ -58,7 +58,7 @@ export default function MechanicDashboard() {
       };
 
       await axios.put(
-        `https://localhost:7121/api/Repairs/${selectedTaskId}/complete`,
+        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${selectedTaskId}/complete`,
         payload,
       );
 
