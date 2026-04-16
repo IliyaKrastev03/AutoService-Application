@@ -35,7 +35,7 @@ export default function AccountingDashboard() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://iliyaauto-001-site1.stempurl.com/api/Dashboard/stats?month=${selectedMonth}&year=${selectedYear}`,
+          `/api/Dashboard/stats?month=${selectedMonth}&year=${selectedYear}`,
         );
         setStats(response.data);
       } catch (error) {

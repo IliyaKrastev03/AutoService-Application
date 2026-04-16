@@ -11,9 +11,7 @@ export default function ServiceDashboard() {
 
   const fetchActiveRepairs = async () => {
     try {
-      const response = await axios.get(
-        "http://iliyaauto-001-site1.stempurl.com/api/Repairs/active",
-      );
+      const response = await axios.get("/api/Repairs/active");
       setActiveRepairs(response.data);
     } catch (error) {
       console.error("Грешка при зареждане на ремонтите:", error);
@@ -22,9 +20,7 @@ export default function ServiceDashboard() {
 
   const fetchMechanics = async () => {
     try {
-      const response = await axios.get(
-        "http://iliyaauto-001-site1.stempurl.com/api/Repairs/mechanics",
-      );
+      const response = await axios.get("/api/Repairs/mechanics");
       setMechanics(response.data);
     } catch (error) {
       console.error("Грешка при зареждане на механиците:", error);
@@ -40,7 +36,7 @@ export default function ServiceDashboard() {
     if (!mechanicName) return;
     try {
       await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${repairId}/assign`,
+        `/api/Repairs/${repairId}/assign`,
         JSON.stringify(mechanicName),
         {
           headers: { "Content-Type": "application/json" },

@@ -11,7 +11,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const baseUrl = "http://iliyaauto-001-site1.stempurl.com/api/Auth";
+    const baseUrl = "/api/Auth";
 
     try {
       const response = await axios.post(`${baseUrl}/login`, {

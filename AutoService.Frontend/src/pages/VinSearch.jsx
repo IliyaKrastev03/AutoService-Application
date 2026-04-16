@@ -23,9 +23,7 @@ export default function VinSearch() {
     setResult(null);
 
     try {
-      const response = await axios.get(
-        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/search/${vinQuery}`,
-      );
+      const response = await axios.get(`/api/Vehicles/search/${vinQuery}`);
       setResult(response.data);
     } catch (err) {
       setError("Автомобил с такъв VIN номер не е намерен в базата данни.");

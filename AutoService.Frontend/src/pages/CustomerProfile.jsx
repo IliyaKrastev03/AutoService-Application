@@ -60,9 +60,7 @@ export default function CustomerProfile() {
 
   const fetchCustomer = async () => {
     try {
-      const response = await axios.get(
-        `http://iliyaauto-001-site1.stempurl.com/api/Customers/${id}`,
-      );
+      const response = await axios.get(`/api/Customers/${id}`);
       setCustomer(response.data);
     } catch (error) {
       console.error("Грешка при зареждане:", error);
@@ -87,10 +85,7 @@ export default function CustomerProfile() {
   const handleEditCustomer = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Customers/${id}`,
-        editCustomerFormData,
-      );
+      await axios.put(`/api/Customers/${id}`, editCustomerFormData);
       alert("Данните на клиента са обновени успешно!");
       setIsEditCustomerModalOpen(false);
       fetchCustomer();
@@ -102,9 +97,7 @@ export default function CustomerProfile() {
 
   const fetchRepairs = async (vehicleId) => {
     try {
-      const response = await axios.get(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/vehicle/${vehicleId}`,
-      );
+      const response = await axios.get(`/api/Repairs/vehicle/${vehicleId}`);
       setVehicleRepairs(response.data);
     } catch (error) {
       console.error("Грешка при зареждане на ремонтите:", error);
@@ -120,7 +113,7 @@ export default function CustomerProfile() {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://iliyaauto-001-site1.stempurl.com/api/Vehicles", {
+      await axios.post("/api/Vehicles", {
         ...carFormData,
         customerId: parseInt(id),
         year: parseInt(carFormData.year),
@@ -147,7 +140,7 @@ export default function CustomerProfile() {
   const handleTransferVehicle = async () => {
     try {
       await axios.post(
-        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/${transferData.vin}/transfer/${transferData.newCustomerId}`,
+        `/api/Vehicles/${transferData.vin}/transfer/${transferData.newCustomerId}`,
       );
       alert(
         "✅ Собствеността и историята са прехвърлени успешно към новия клиент!",
@@ -168,9 +161,7 @@ export default function CustomerProfile() {
     )
       return;
     try {
-      await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Vehicles/${vehicleId}/archive`,
-      );
+      await axios.put(`/api/Vehicles/${vehicleId}/archive`);
       alert("Автомобилът е премахнат успешно!");
       fetchCustomer();
     } catch (error) {
@@ -182,7 +173,7 @@ export default function CustomerProfile() {
   const handleAddRepair = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://iliyaauto-001-site1.stempurl.com/api/Repairs", {
+      await axios.post("/api/Repairs", {
         repairType: repairFormData.repairType,
         complaint: repairFormData.complaint,
         description: repairFormData.description,
@@ -250,10 +241,7 @@ export default function CustomerProfile() {
           quantity: parseInt(p.quantity || 1),
         })),
       };
-      await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${costingRepair.id}/costing`,
-        payload,
-      );
+      await axios.put(`/api/Repairs/${costingRepair.id}/costing`, payload);
       alert("Ремонтът е остойностен успешно!");
       setIsCostingModalOpen(false);
       fetchRepairs(selectedVehicle.id);
@@ -270,9 +258,7 @@ export default function CustomerProfile() {
     )
       return;
     try {
-      await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${repairId}/pay`,
-      );
+      await axios.put(`/api/Repairs/${repairId}/pay`);
       alert("✅ Успешно плащане! Ремонтът е приключен.");
       fetchRepairs(selectedVehicle.id);
     } catch (error) {

@@ -34,9 +34,7 @@ export default function ManagerDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(
-        "http://iliyaauto-001-site1.stempurl.com/api/Auth/users",
-      );
+      const response = await axios.get("/api/Auth/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Грешка:", error);
@@ -45,9 +43,7 @@ export default function ManagerDashboard() {
 
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get(
-        "http://iliyaauto-001-site1.stempurl.com/api/Customers",
-      );
+      const response = await axios.get("/api/Customers");
       setCustomers(response.data);
     } catch (error) {
       console.error("Грешка:", error);
@@ -62,18 +58,15 @@ export default function ManagerDashboard() {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "http://iliyaauto-001-site1.stempurl.com/api/Auth/register",
-        {
-          username: formData.name,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-          compensationType: formData.compensationType,
-          commissionPercentage: formData.commissionPercentage,
-          monthlySalary: formData.monthlySalary,
-        },
-      );
+      await axios.post("/api/Auth/register", {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        compensationType: formData.compensationType,
+        commissionPercentage: formData.commissionPercentage,
+        monthlySalary: formData.monthlySalary,
+      });
       alert("Служителят е добавен успешно!");
       setIsModalOpen(false);
       setFormData({
@@ -98,9 +91,7 @@ export default function ManagerDashboard() {
   const handleDeleteUser = async (id, name) => {
     if (window.confirm(`Сигурни ли сте, че искате да изтриете: ${name}?`)) {
       try {
-        await axios.delete(
-          `http://iliyaauto-001-site1.stempurl.com/api/Auth/users/${id}`,
-        );
+        await axios.delete(`/api/Auth/users/${id}`);
         fetchUsers();
       } catch (error) {
         alert("Грешка при изтриване.");
@@ -112,10 +103,7 @@ export default function ManagerDashboard() {
     const newPassword = window.prompt(`Въведете нова парола за: ${name}`);
     if (newPassword && newPassword.length >= 6) {
       try {
-        await axios.post(
-          `http://iliyaauto-001-site1.stempurl.com/api/Auth/reset-password/${id}`,
-          { newPassword },
-        );
+        await axios.post(`/api/Auth/reset-password/${id}`, { newPassword });
         alert(`Паролата е променена!`);
       } catch (error) {
         alert("Грешка при смяна.");
@@ -128,10 +116,7 @@ export default function ManagerDashboard() {
   const handleAddCustomer = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "http://iliyaauto-001-site1.stempurl.com/api/Customers",
-        customerFormData,
-      );
+      await axios.post("/api/Customers", customerFormData);
       alert("Клиентът е добавен успешно!");
       setIsCustomerModalOpen(false);
       setCustomerFormData({

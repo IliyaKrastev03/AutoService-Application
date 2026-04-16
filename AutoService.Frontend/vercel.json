@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://iliyaauto-001-site1.stempurl.com/api/:path*"
+    }
+  ]
+}

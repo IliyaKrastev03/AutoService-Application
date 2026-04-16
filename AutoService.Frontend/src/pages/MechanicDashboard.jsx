@@ -18,9 +18,7 @@ export default function MechanicDashboard() {
   const fetchMyTasks = async () => {
     if (!mechanicName) return;
     try {
-      const response = await axios.get(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/mechanic/${mechanicName}`,
-      );
+      const response = await axios.get(`/api/Repairs/mechanic/${mechanicName}`);
       setTasks(response.data);
     } catch (error) {
       console.error("Грешка при зареждане на задачите:", error);
@@ -31,7 +29,7 @@ export default function MechanicDashboard() {
     if (!mechanicName) return;
     try {
       const response = await axios.get(
-        `http://iliyaauto-001-site1.stempurl.com/api/Dashboard/mechanic-stats/${mechanicName}`,
+        `/api/Dashboard/mechanic-stats/${mechanicName}`,
       );
       setMyStats(response.data);
     } catch (error) {
@@ -57,10 +55,7 @@ export default function MechanicDashboard() {
         workedMinutes: parseInt(timeReport.minutes) || 0,
       };
 
-      await axios.put(
-        `http://iliyaauto-001-site1.stempurl.com/api/Repairs/${selectedTaskId}/complete`,
-        payload,
-      );
+      await axios.put(`/api/Repairs/${selectedTaskId}/complete`, payload);
 
       alert("Работата е отчетена успешно! Колата отива при Управителя.");
 
