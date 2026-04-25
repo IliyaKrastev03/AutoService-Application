@@ -522,6 +522,11 @@
   max-width: 900px;
 }
 
+.warning-left {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
 @media print {
   .sidebar,
   .dashboard-content,
@@ -551,7 +556,6 @@
     padding: 0 !important;
   }
 }
-/* --- СТИЛОВЕ ЗА ПРОЗОРЕЦА ЗА ПРЕХВЪРЛЯНЕ (VIN КОНФЛИКТ) --- */
 .transfer-modal-title {
   color: #e74c3c;
   border-bottom: 2px solid #e74c3c;
@@ -581,7 +585,6 @@
   background: #c0392b;
 }
 
-/* --- ИЗЧИСТЕНИ СТИЛОВЕ ЗА ФАКТУРАТА (ПРИНТ) --- */
 .invoice-print-header {
   text-align: center;
   border-bottom: 2px solid #ecf0f1;
@@ -634,7 +637,6 @@
   align-items: center;
   gap: 8px;
 }
-/* --- СТИЛОВЕ ЗА ПРЕДИШНИ (АРХИВИРАНИ/ПРЕХВЪРЛЕНИ) АВТОМОБИЛИ --- */
 .previous-vehicles-container {
   margin-top: 40px;
 }
@@ -656,4 +658,95 @@
 .vehicle-plate-archived {
   background: #bdc3c7;
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding-top: 65px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .profile-header-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .profile-header-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .btn-edit-customer {
+    width: 100%;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .btn-add {
+    width: 100%;
+  }
+
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-history-section {
+    overflow-x: auto;
+  }
+  .service-history-section .custom-table {
+    white-space: nowrap;
+  }
+
+  .invoice-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .modal-content.size-xl,
+  .modal-content.size-md,
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    margin-top: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .part-row {
+    grid-template-columns: 1fr;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  .part-row-header {
+    display: none;
+  }
+  .labor-cost-group {
+    width: 100%;
+  }
+
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .modal-actions.spaced {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
 }

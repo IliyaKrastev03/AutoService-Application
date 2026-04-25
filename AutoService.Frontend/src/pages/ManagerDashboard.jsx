@@ -8,10 +8,10 @@ export default function ManagerDashboard() {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
     role: "Mechanic",
     compensationType: "Percentage",
     commissionPercentage: 40,
@@ -61,18 +61,18 @@ export default function ManagerDashboard() {
       await axios.post("/api/Auth/register", {
         username: formData.name,
         email: formData.email,
-        password: formData.password,
         role: formData.role,
         compensationType: formData.compensationType,
         commissionPercentage: formData.commissionPercentage,
         monthlySalary: formData.monthlySalary,
       });
-      alert("Служителят е добавен успешно!");
+      alert(
+        "Служителят е добавен успешно! Изпратен му е имейл за задаване на парола.",
+      );
       setIsModalOpen(false);
       setFormData({
         name: "",
         email: "",
-        password: "",
         role: "Mechanic",
         compensationType: "Percentage",
         commissionPercentage: 40,
@@ -100,16 +100,17 @@ export default function ManagerDashboard() {
   };
 
   const handleResetPassword = async (id, name) => {
-    const newPassword = window.prompt(`Въведете нова парола за: ${name}`);
-    if (newPassword && newPassword.length >= 6) {
+    if (
+      window.confirm(
+        `Искате ли да изпратите линк за нова парола на имейла на: ${name}?`,
+      )
+    ) {
       try {
-        await axios.post(`/api/Auth/reset-password/${id}`, { newPassword });
-        alert(`Паролата е променена!`);
+        await axios.post(`/api/Auth/reset-password/${id}`);
+        alert(`Изпратен е линк за смяна на паролата към имейла на ${name}!`);
       } catch (error) {
-        alert("Грешка при смяна.");
+        alert("Грешка при изпращане на линка за парола.");
       }
-    } else if (newPassword) {
-      alert("Паролата трябва да е поне 6 символа!");
     }
   };
 
@@ -239,9 +240,7 @@ export default function ManagerDashboard() {
                       <td>
                         <strong>{user.name || user.username}</strong>
                         <br />
-                        <span style={{ fontSize: "12px", color: "#7f8c8d" }}>
-                          {user.email}
-                        </span>
+                        <span className="sub-text-muted">{user.email}</span>
                       </td>
                       <td>
                         <span
@@ -253,24 +252,18 @@ export default function ManagerDashboard() {
                       <td>
                         {user.role === "Mechanic" ? (
                           <span
-                            style={{
-                              fontWeight: "bold",
-                              color:
-                                user.compensationType === "Percentage"
-                                  ? "#e67e22"
-                                  : "#2980b9",
-                            }}
+                            className={
+                              user.compensationType === "Percentage"
+                                ? "comp-percentage"
+                                : "comp-salary"
+                            }
                           >
                             {user.compensationType === "Percentage"
                               ? `${user.commissionPercentage}% Заработка`
                               : `Твърда Заплата: ${user.monthlySalary} €`}
                           </span>
                         ) : (
-                          <span
-                            style={{ color: "#7f8c8d", fontStyle: "italic" }}
-                          >
-                            Стандартно
-                          </span>
+                          <span className="comp-standard">Стандартно</span>
                         )}
                       </td>
                       <td>
@@ -342,9 +335,7 @@ export default function ManagerDashboard() {
                         {customer.firstName} {customer.lastName}
                       </strong>
                       <br />
-                      <span style={{ fontSize: "12px", color: "#7f8c8d" }}>
-                        {customer.address}
-                      </span>
+                      <span className="sub-text-muted">{customer.address}</span>
                     </td>
                     <td>{customer.phone}</td>
                     <td>
@@ -400,17 +391,6 @@ export default function ManagerDashboard() {
                 />
               </div>
               <div className="form-group">
-                <label>Парола:</label>
-                <input
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
                 <label>Роля:</label>
                 <select
                   value={formData.role}
@@ -428,9 +408,7 @@ export default function ManagerDashboard() {
               {formData.role === "Mechanic" && (
                 <>
                   <div className="form-group">
-                    <label style={{ color: "#e67e22", fontWeight: "bold" }}>
-                      Тип заплащане:
-                    </label>
+                    <label className="label-percentage">Тип заплащане:</label>
                     <select
                       value={formData.compensationType}
                       onChange={(e) =>
@@ -439,7 +417,7 @@ export default function ManagerDashboard() {
                           compensationType: e.target.value,
                         })
                       }
-                      style={{ border: "2px solid #e67e22" }}
+                      className="input-percentage"
                     >
                       <option value="Percentage">
                         На процент от труда (%)
@@ -467,7 +445,7 @@ export default function ManagerDashboard() {
                     </div>
                   ) : (
                     <div className="form-group">
-                      <label style={{ color: "#2980b9", fontWeight: "bold" }}>
+                      <label className="label-salary">
                         Месечна заплата (€):
                       </label>
                       <input
@@ -482,7 +460,7 @@ export default function ManagerDashboard() {
                             monthlySalary: parseFloat(e.target.value),
                           })
                         }
-                        style={{ border: "2px solid #2980b9" }}
+                        className="input-salary"
                       />
                     </div>
                   )}

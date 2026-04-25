@@ -11,8 +11,10 @@
         public string? VerificationToken { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CompensationType { get; set; } = "Percentage";
-        public decimal CommissionPercentage { get; set; } = 40; 
+        public decimal CommissionPercentage { get; set; } = 40;
         public decimal MonthlySalary { get; set; } = 0;
         public bool IsActive { get; set; } = true;
+        public string? ResetPasswordToken { get; set; } 
+        public DateTime? ResetPasswordTokenExpiry { get; set; }
     }
 }

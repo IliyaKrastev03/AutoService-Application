@@ -61,34 +61,17 @@ export default function ServiceDashboard() {
     <div className="dashboard-layout">
       <Sidebar />
       <div className="dashboard-content">
-        <h1
-          style={{
-            color: "#2c3e50",
-            borderBottom: "3px solid #3498db",
-            paddingBottom: "10px",
-          }}
-        >
-          📋 Сервизен График (Активни ремонти)
-        </h1>
+        <h1 className="service-title">📋 Сервизен График (Активни ремонти)</h1>
 
         <div className="kanban-board">
           <div className="kanban-column">
             <h3 className="column-header warning">
               <span>🟡 Чакащи</span>
-              <span
-                style={{
-                  background: "#e9ecef",
-                  padding: "2px 10px",
-                  borderRadius: "15px",
-                  fontSize: "16px",
-                }}
-              >
-                {waitingRepairs.length}
-              </span>
+              <span className="count-badge">{waitingRepairs.length}</span>
             </h3>
 
             {waitingRepairs.length === 0 && (
-              <p style={{ color: "#7f8c8d" }}>Няма чакащи автомобили.</p>
+              <p className="empty-column-msg">Няма чакащи автомобили.</p>
             )}
 
             {waitingRepairs.map((repair) => (
@@ -108,7 +91,7 @@ export default function ServiceDashboard() {
                   <strong>📋 Тип:</strong> {repair.repairType}
                 </p>
                 {repair.complaint && (
-                  <p style={{ color: "#e74c3c" }}>
+                  <p className="complaint-text">
                     <strong>⚠️ Оплакване:</strong> {repair.complaint}
                   </p>
                 )}
@@ -116,34 +99,12 @@ export default function ServiceDashboard() {
                   <strong>🛠️ Действия:</strong> {repair.description}
                 </p>
 
-                <div
-                  style={{
-                    marginTop: "15px",
-                    marginBottom: "10px",
-                    background: "#f8f9fa",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border: "1px dashed #bdc3c7",
-                  }}
-                >
-                  <label
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      color: "#2c3e50",
-                      display: "block",
-                      marginBottom: "5px",
-                    }}
-                  >
+                <div className="assign-box">
+                  <label className="assign-label">
                     👨‍🔧 Възложи на служител:
                   </label>
                   <select
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      borderRadius: "5px",
-                      border: "1px solid #ccc",
-                    }}
+                    className="assign-select"
                     defaultValue=""
                     onChange={(e) => assignMechanic(repair.id, e.target.value)}
                   >
@@ -173,20 +134,11 @@ export default function ServiceDashboard() {
           <div className="kanban-column">
             <h3 className="column-header info">
               <span>🔵 В процес</span>
-              <span
-                style={{
-                  background: "#e9ecef",
-                  padding: "2px 10px",
-                  borderRadius: "15px",
-                  fontSize: "16px",
-                }}
-              >
-                {inProgressRepairs.length}
-              </span>
+              <span className="count-badge">{inProgressRepairs.length}</span>
             </h3>
 
             {inProgressRepairs.length === 0 && (
-              <p style={{ color: "#7f8c8d" }}>Няма автомобили в процес.</p>
+              <p className="empty-column-msg">Няма автомобили в процес.</p>
             )}
 
             {inProgressRepairs.map((repair) => (
@@ -204,16 +156,7 @@ export default function ServiceDashboard() {
                   <strong>🛠️ Действия:</strong> {repair.description}
                 </p>
 
-                <p
-                  style={{
-                    marginTop: "10px",
-                    padding: "8px",
-                    background: "#e1f5fe",
-                    borderRadius: "5px",
-                    color: "#0277bd",
-                    fontWeight: "bold",
-                  }}
-                >
+                <p className="mechanic-assigned-badge">
                   👨‍🔧 Работи: {repair.mechanicId}
                 </p>
 
@@ -232,20 +175,11 @@ export default function ServiceDashboard() {
           <div className="kanban-column">
             <h3 className="column-header success">
               <span>🟠 Чакат Цена</span>
-              <span
-                style={{
-                  background: "#e9ecef",
-                  padding: "2px 10px",
-                  borderRadius: "15px",
-                  fontSize: "16px",
-                }}
-              >
-                {finishedRepairs.length}
-              </span>
+              <span className="count-badge">{finishedRepairs.length}</span>
             </h3>
 
             {finishedRepairs.length === 0 && (
-              <p style={{ color: "#7f8c8d" }}>
+              <p className="empty-column-msg">
                 Няма завършени за остойностяване.
               </p>
             )}
@@ -264,23 +198,13 @@ export default function ServiceDashboard() {
                   {repair.vehicle?.customer?.lastName}
                 </p>
 
-                <p
-                  style={{
-                    marginTop: "10px",
-                    padding: "8px",
-                    background: "#fef9e7",
-                    borderRadius: "5px",
-                    color: "#d35400",
-                    fontWeight: "bold",
-                  }}
-                >
+                <p className="worked-time-badge">
                   ⏱️ Изработено време: <br /> {repair.workedHours} ч. и{" "}
                   {repair.workedMinutes} мин.
                 </p>
 
                 <button
-                  className="btn-open-repair"
-                  style={{ background: "#e67e22", color: "white" }}
+                  className="btn-open-repair btn-evaluate"
                   onClick={() =>
                     navigate(`/customer/${repair.vehicle?.customerId}`)
                   }

@@ -8,12 +8,15 @@ import CustomerProfile from "./pages/CustomerProfile";
 import ServiceDashboard from "./pages/ServiceDashboard";
 import VinSearch from "./pages/VinSearch";
 import AccountingDashboard from "./pages/AccountingDashboard";
+import SetPassword from "./pages/SetPassword";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+
+        <Route path="/set-password" element={<SetPassword />} />
 
         <Route
           path="/manager"

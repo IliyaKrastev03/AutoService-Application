@@ -807,10 +807,7 @@ export default function CustomerProfile() {
               </div>
 
               {!isCurrentOwner && (
-                <p
-                  className="empty-parts-message"
-                  style={{ textAlign: "left", marginBottom: "15px" }}
-                >
+                <p className="empty-parts-message warning-left">
                   * Този автомобил вече е собственост на друг клиент. Можете
                   само да разглеждате сервизната му история.
                 </p>

@@ -1,4 +1,3 @@
-/* --- ОСНОВНИ И ИЗЧИСТЕНИ СТИЛОВЕ --- */
 .vin-page-title {
   color: #2c3e50;
   border-bottom: 3px solid #3498db;
@@ -34,7 +33,54 @@
   padding: 20px;
 }
 
-/* --- СТИЛОВЕ ЗА ИСТОРИЯТА НА СОБСТВЕНОСТТА --- */
+.archive-badge {
+  background: #e74c3c;
+  color: white;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  margin-left: 15px;
+  vertical-align: middle;
+}
+
+.vin-search-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.search-box {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.vin-input {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
+
+.btn-search {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-search:hover {
+  background: #2980b9;
+}
+
 .ownership-history-section {
   background: #f8f9fa;
   padding: 20px;
@@ -55,12 +101,12 @@
   background: white;
   padding: 15px;
   border-radius: 6px;
-  border-left: 5px solid #bdc3c7; /* Сиво за старите собственици */
+  border-left: 5px solid #bdc3c7;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .ownership-item.current {
-  border-left-color: #2ecc71; /* Зелено за настоящия собственик */
+  border-left-color: #2ecc71;
 }
 
 .ownership-status-icon {
@@ -99,4 +145,41 @@
 
 .ownership-dates {
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding-top: 65px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .search-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vin-input,
+  .btn-search {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .archive-badge {
+    display: block;
+    margin-left: 0;
+    margin-top: 10px;
+    width: fit-content;
+  }
+
+  .ownership-item {
+    align-items: flex-start;
+  }
+
+  .current-badge {
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+    width: fit-content;
+  }
 }

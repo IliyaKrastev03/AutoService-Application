@@ -102,3 +102,95 @@
 .repair-card.status-finished {
   border-left-color: #e67e22;
 }
+
+.service-title {
+  color: #2c3e50;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.count-badge {
+  background: #e9ecef;
+  padding: 2px 10px;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+.empty-column-msg {
+  color: #7f8c8d;
+}
+
+.complaint-text {
+  color: #e74c3c !important;
+}
+
+.assign-box {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px dashed #bdc3c7;
+}
+
+.assign-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.assign-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.mechanic-assigned-badge {
+  margin-top: 10px;
+  padding: 8px;
+  background: #e1f5fe;
+  border-radius: 5px;
+  color: #0277bd !important;
+  font-weight: bold;
+}
+
+.worked-time-badge {
+  margin-top: 10px;
+  padding: 8px;
+  background: #fef9e7;
+  border-radius: 5px;
+  color: #d35400 !important;
+  font-weight: bold;
+}
+
+.btn-evaluate {
+  background: #e67e22;
+  color: white;
+}
+
+.btn-evaluate:hover {
+  background: #d35400;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding-top: 65px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .kanban-board {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .kanban-column {
+    width: 100%;
+    min-height: auto;
+    box-sizing: border-box;
+  }
+}

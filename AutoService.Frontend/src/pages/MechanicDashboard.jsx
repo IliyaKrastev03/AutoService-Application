@@ -84,86 +84,25 @@ export default function MechanicDashboard() {
             Активни задачи: <strong>{tasks.length}</strong>
           </div>
         </div>
+
         {myStats && (
-          <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
-            <div
-              style={{
-                flex: 1,
-                background: "white",
-                padding: "20px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
-                borderLeft: "5px solid #27ae60",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  color: "#7f8c8d",
-                  fontSize: "14px",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                Натрупана Заработка
-              </p>
-              <h2
-                style={{
-                  margin: "5px 0 0 0",
-                  color: "#27ae60",
-                  fontSize: "28px",
-                }}
-              >
+          <div className="mechanic-stats-container">
+            <div className="mechanic-stat-card green-border">
+              <p className="mechanic-stat-label">Натрупана Заработка</p>
+              <h2 className="mechanic-stat-value green-text">
                 {myStats.earnedMoney.toFixed(2)} €
               </h2>
-              <p
-                style={{
-                  margin: "5px 0 0 0",
-                  fontSize: "12px",
-                  color: "#95a5a6",
-                }}
-              >
+              <p className="mechanic-stat-footer">
                 Договор: <strong>{myStats.compensationInfo}</strong>
               </p>
             </div>
 
-            <div
-              style={{
-                flex: 1,
-                background: "white",
-                padding: "20px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
-                borderLeft: "5px solid #3498db",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  color: "#7f8c8d",
-                  fontSize: "14px",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                Общо изработено време
-              </p>
-              <h2
-                style={{
-                  margin: "5px 0 0 0",
-                  color: "#2c3e50",
-                  fontSize: "28px",
-                }}
-              >
+            <div className="mechanic-stat-card blue-border">
+              <p className="mechanic-stat-label">Общо изработено време</p>
+              <h2 className="mechanic-stat-value dark-text">
                 {myStats.totalHours} ч. {myStats.totalMinutes} м.
               </h2>
-              <p
-                style={{
-                  margin: "5px 0 0 0",
-                  fontSize: "12px",
-                  color: "#95a5a6",
-                }}
-              >
+              <p className="mechanic-stat-footer">
                 Завършени ремонти: <strong>{myStats.repairsCount} бр.</strong>
               </p>
             </div>

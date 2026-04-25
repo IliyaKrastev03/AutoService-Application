@@ -10,7 +10,6 @@ export default function VinSearch() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // 🌟 Щатове за отваряне на детайлите на ремонта (фактурата) 🌟
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [infoRepair, setInfoRepair] = useState(null);
 
@@ -32,7 +31,6 @@ export default function VinSearch() {
     }
   };
 
-  // 🌟 Функция за отваряне на прозореца 🌟
   const openInfoModal = (repair) => {
     setInfoRepair(repair);
     setIsInfoModalOpen(true);
@@ -112,7 +110,6 @@ export default function VinSearch() {
               </div>
             </div>
 
-            {/* 🌟 ИСТОРИЯ НА СОБСТВЕНОСТТА 🌟 */}
             {result.ownershipHistory && result.ownershipHistory.length > 0 && (
               <div className="ownership-history-section">
                 <h3 className="vin-section-title">
@@ -173,7 +170,7 @@ export default function VinSearch() {
                     <th>Километри</th>
                     <th>Обща Цена</th>
                     <th>Статус</th>
-                    <th>Детайли</th> {/* 🌟 НОВА КОЛОНА ЗА БУТОНА 🌟 */}
+                    <th>Детайли</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,7 +203,6 @@ export default function VinSearch() {
                           </span>
                         </td>
                         <td>
-                          {/* 🌟 БУТОН ЗА ВИЗУАЛИЗАЦИЯ НА ФАКТУРАТА 🌟 */}
                           <button
                             className="action-btn-info"
                             onClick={() => openInfoModal(repair)}
@@ -229,7 +225,6 @@ export default function VinSearch() {
           </div>
         )}
 
-        {/* 🌟 МОДАЛЕН ПРОЗОРЕЦ ЗА ДЕТАЙЛИТЕ НА РЕМОНТА (ФАКТУРА) 🌟 */}
         {isInfoModalOpen && infoRepair && result && (
           <div className="modal-overlay top-layer invoice-print-container">
             <div

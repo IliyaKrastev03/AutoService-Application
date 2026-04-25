@@ -116,3 +116,79 @@
 .btn-submit-success:hover {
   background: #219653;
 }
+
+.mechanic-stats-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.mechanic-stat-card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.green-border {
+  border-left: 5px solid #27ae60;
+}
+
+.blue-border {
+  border-left: 5px solid #3498db;
+}
+
+.mechanic-stat-label {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.mechanic-stat-value {
+  margin: 5px 0 0 0;
+  font-size: 28px;
+}
+
+.green-text {
+  color: #27ae60;
+}
+
+.dark-text {
+  color: #2c3e50;
+}
+
+.mechanic-stat-footer {
+  margin: 5px 0 0 0;
+  font-size: 12px;
+  color: #95a5a6;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding-top: 65px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .mechanic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .mechanic-stats-container {
+    flex-direction: column;
+  }
+
+  .mechanic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .time-inputs-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
