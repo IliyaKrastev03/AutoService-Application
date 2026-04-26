@@ -40,5 +40,6 @@ namespace AutoService.API.Models
         public string? MechanicId { get; set; }
 
         public virtual ICollection<RepairPart> Parts { get; set; } = new List<RepairPart>();
+        public virtual ICollection<RepairPhoto> Photos { get; set; } = new List<RepairPhoto>();
     }
 }

@@ -660,6 +660,78 @@
   color: #fff;
 }
 
+.btn-photos {
+  background-color: #6c757d;
+}
+.btn-photos:hover {
+  background-color: #5a6268;
+}
+
+.photo-buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-camera {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.btn-camera:hover {
+  background-color: #218838;
+}
+
+.btn-gallery {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.btn-gallery:hover {
+  background-color: #0069d9;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.repair-photo-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: transform 0.2s ease-in-out;
+}
+.repair-photo-img:hover {
+  transform: scale(1.03);
+}
+
+.empty-photos-text {
+  text-align: center;
+  color: #666;
+  padding: 20px 0;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+
 @media (max-width: 768px) {
   .dashboard-content {
     padding-top: 65px;
@@ -748,5 +820,21 @@
   }
   .modal-actions button {
     width: 100%;
+  }
+
+  .photo-buttons-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn-camera,
+  .btn-gallery {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 16px;
+  }
+
+  .photos-grid {
+    grid-template-columns: 1fr;
   }
 }

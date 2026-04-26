@@ -155,6 +155,28 @@ namespace AutoService.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(repair);
         }
+        [HttpPost("{id}/photos")]
+        public async Task<IActionResult> AddRepairPhoto(int id, [FromBody] PhotoDto photoDto)
+        {
+            var repair = await _context.Repairs.FindAsync(id);
+            if (repair == null) return NotFound("Ремонтът не е намерен!");
+
+            if (string.IsNullOrEmpty(photoDto.ImageUrl))
+            {
+                return BadRequest("Липсва линк към снимката.");
+            }
+
+            var newPhoto = new RepairPhoto
+            {
+                RepairId = id,
+                ImageUrl = photoDto.ImageUrl
+            };
+
+            _context.RepairPhotos.Add(newPhoto);
+            await _context.SaveChangesAsync();
+
+            return Ok(newPhoto);
+        }
     }
     public class CompleteRepairDto
     {

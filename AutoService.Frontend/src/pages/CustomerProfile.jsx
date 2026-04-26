@@ -58,6 +58,10 @@ export default function CustomerProfile() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [infoRepair, setInfoRepair] = useState(null);
 
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [photoRepair, setPhotoRepair] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+
   const fetchCustomer = async () => {
     try {
       const response = await axios.get(`/api/Customers/${id}`);
@@ -207,17 +211,64 @@ export default function CustomerProfile() {
     setIsInfoModalOpen(true);
   };
 
+  const openPhotoModal = (repair) => {
+    setPhotoRepair(repair);
+    setIsPhotoModalOpen(true);
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIsUploading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "repair_photos");
+
+    try {
+      const cloudRes = await fetch(
+        "https://api.cloudinary.com/v1_1/dlpbuisb5/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      const cloudData = await cloudRes.json();
+      const imageUrl = cloudData.secure_url;
+
+      await axios.post(`/api/Repairs/${photoRepair.id}/photos`, {
+        imageUrl: imageUrl,
+      });
+
+      alert("✅ Снимката е качена успешно!");
+      fetchRepairs(selectedVehicle.id);
+
+      setPhotoRepair((prev) => ({
+        ...prev,
+        photos: [...(prev.photos || []), { id: Date.now(), imageUrl }],
+      }));
+    } catch (error) {
+      console.error("Грешка при качване:", error);
+      alert("❌ Възникна грешка при качването на снимката.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleAddPartRow = () => {
     setPartsList([
       ...partsList,
       { name: "", partNumber: "", price: 0, quantity: 1 },
     ]);
   };
+
   const handlePartChange = (index, field, value) => {
     const newParts = [...partsList];
     newParts[index][field] = value;
     setPartsList(newParts);
   };
+
   const handleRemovePartRow = (index) => {
     setPartsList(partsList.filter((_, i) => i !== index));
   };
@@ -864,6 +915,15 @@ export default function CustomerProfile() {
                           </button>
                         )}
 
+                        {isCurrentOwner && repair.status !== "Завършен" && (
+                          <button
+                            className="action-btn-info btn-photos"
+                            onClick={() => openPhotoModal(repair)}
+                          >
+                            📸 Снимки
+                          </button>
+                        )}
+
                         {isCurrentOwner &&
                           repair.status === "Остойностен (Чака плащане)" && (
                             <button
@@ -1153,6 +1213,84 @@ export default function CustomerProfile() {
                 onClick={() => window.print()}
               >
                 🖨️ Разпечатай Бележка
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isPhotoModalOpen && photoRepair && (
+        <div className="modal-overlay top-layer">
+          <div className="modal-content size-md">
+            <div className="modal-header-flex">
+              <h2 className="modal-title-md">📸 Снимки към ремонт</h2>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsPhotoModalOpen(false)}
+              >
+                ✖
+              </button>
+            </div>
+
+            <p className="modal-subtitle-text mb-20">
+              Ремонт: <strong>{photoRepair.description}</strong>
+            </p>
+
+            <div className="photo-buttons-container">
+              <label className="btn-camera">
+                {isUploading ? "⏳ Качване..." : "📷 Снимай сега"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  style={{ display: "none" }}
+                  onChange={handlePhotoUpload}
+                  disabled={isUploading}
+                />
+              </label>
+
+              <label className="btn-gallery">
+                {isUploading ? "⏳ Качване..." : "📁 От телефона"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handlePhotoUpload}
+                  disabled={isUploading}
+                />
+              </label>
+            </div>
+
+            {photoRepair.photos && photoRepair.photos.length > 0 ? (
+              <div className="photos-grid">
+                {photoRepair.photos.map((p) => (
+                  <a
+                    key={p.id}
+                    href={p.imageUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={p.imageUrl}
+                      alt="Repair"
+                      className="repair-photo-img"
+                    />
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p className="empty-photos-text">
+                Все още няма качени снимки за този ремонт.
+              </p>
+            )}
+
+            <div className="modal-actions spaced mt-20">
+              <button
+                type="button"
+                className="btn-cancel"
+                onClick={() => setIsPhotoModalOpen(false)}
+              >
+                Затвори
               </button>
             </div>
           </div>

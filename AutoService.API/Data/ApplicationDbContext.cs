@@ -15,20 +15,18 @@ namespace AutoService.API.Data
         public DbSet<Repair> Repairs { get; set; }
         public DbSet<RepairPart> RepairParts { get; set; }
         public DbSet<VehicleOwnership> VehicleOwnerships { get; set; }
+        public DbSet<RepairPhoto> RepairPhotos { get; set; }
 
-        // 🌟 НОВО: ТУК СПИРАМЕ ПАНИКАТА НА SQL SERVER 🌟
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Забраняваме автоматичното триене на историята, ако се изтрие Клиент
             modelBuilder.Entity<VehicleOwnership>()
                 .HasOne(vo => vo.Customer)
                 .WithMany()
                 .HasForeignKey(vo => vo.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Забраняваме автоматичното триене на историята, ако се изтрие Кола
             modelBuilder.Entity<VehicleOwnership>()
                 .HasOne(vo => vo.Vehicle)
                 .WithMany()
