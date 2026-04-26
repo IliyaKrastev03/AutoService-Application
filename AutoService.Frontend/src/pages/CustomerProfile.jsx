@@ -915,7 +915,7 @@ export default function CustomerProfile() {
                           </button>
                         )}
 
-                        {isCurrentOwner && repair.status !== "Завършен" && (
+                        {isCurrentOwner && (
                           <button
                             className="action-btn-info btn-photos"
                             onClick={() => openPhotoModal(repair)}
@@ -1236,30 +1236,43 @@ export default function CustomerProfile() {
               Ремонт: <strong>{photoRepair.description}</strong>
             </p>
 
-            <div className="photo-buttons-container">
-              <label className="btn-camera">
-                {isUploading ? "⏳ Качване..." : "📷 Снимай сега"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  style={{ display: "none" }}
-                  onChange={handlePhotoUpload}
-                  disabled={isUploading}
-                />
-              </label>
+            {photoRepair.status !== "Завършен" ? (
+              <div className="photo-buttons-container">
+                <label className="btn-camera">
+                  {isUploading ? "⏳ Качване..." : "📷 Снимай сега"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    style={{ display: "none" }}
+                    onChange={handlePhotoUpload}
+                    disabled={isUploading}
+                  />
+                </label>
 
-              <label className="btn-gallery">
-                {isUploading ? "⏳ Качване..." : "📁 От телефона"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handlePhotoUpload}
-                  disabled={isUploading}
-                />
-              </label>
-            </div>
+                <label className="btn-gallery">
+                  {isUploading ? "⏳ Качване..." : "📁 От телефона"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handlePhotoUpload}
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+            ) : (
+              <p
+                className="status-badge completed"
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                🔒 Ремонтът е приключен. Снимките са само за преглед.
+              </p>
+            )}
 
             {photoRepair.photos && photoRepair.photos.length > 0 ? (
               <div className="photos-grid">
