@@ -36,6 +36,7 @@ namespace AutoService.API.Controllers
         {
             var repairs = await _context.Repairs
                 .Include(r => r.Parts)
+                .Include(r => r.Photos)
                 .Where(r => r.VehicleId == vehicleId)
                 .OrderByDescending(r => r.CreatedAt) 
                 .ToListAsync();
