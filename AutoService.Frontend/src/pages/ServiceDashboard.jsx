@@ -122,7 +122,9 @@ export default function ServiceDashboard() {
                 <button
                   className="btn-open-repair"
                   onClick={() =>
-                    navigate(`/customer/${repair.vehicle?.customerId}`)
+                    navigate(`/customer/${repair.vehicle?.customerId}`, {
+                      state: { autoOpenVehicleId: repair.vehicleId },
+                    })
                   }
                 >
                   Отвори досието
@@ -163,7 +165,9 @@ export default function ServiceDashboard() {
                 <button
                   className="btn-open-repair"
                   onClick={() =>
-                    navigate(`/customer/${repair.vehicle?.customerId}`)
+                    navigate(`/customer/${repair.vehicle?.customerId}`, {
+                      state: { autoOpenVehicleId: repair.vehicleId },
+                    })
                   }
                 >
                   Отвори досието
@@ -206,7 +210,9 @@ export default function ServiceDashboard() {
                 <button
                   className="btn-open-repair btn-evaluate"
                   onClick={() =>
-                    navigate(`/customer/${repair.vehicle?.customerId}`)
+                    navigate(`/customer/${repair.vehicle?.customerId}`, {
+                      state: { autoOpenVehicleId: repair.vehicleId },
+                    })
                   }
                 >
                   💰 Отвори и Остойности

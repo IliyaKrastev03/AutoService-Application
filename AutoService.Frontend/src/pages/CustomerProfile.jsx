@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import "./CustomerProfile.css";
@@ -7,6 +7,7 @@ import "./CustomerProfile.css";
 export default function CustomerProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [customer, setCustomer] = useState(null);
 
   const [isEditCustomerModalOpen, setIsEditCustomerModalOpen] = useState(false);
@@ -74,6 +75,25 @@ export default function CustomerProfile() {
   useEffect(() => {
     fetchCustomer();
   }, [id]);
+
+  useEffect(() => {
+    if (customer && location.state?.autoOpenVehicleId) {
+      const activeVehicles = customer.vehicles || customer.Vehicles || [];
+      const previousVehicles =
+        customer.previousVehicles || customer.PreviousVehicles || [];
+      const allVehicles = [...activeVehicles, ...previousVehicles];
+
+      const targetCar = allVehicles.find(
+        (v) => v.id === location.state.autoOpenVehicleId,
+      );
+
+      if (targetCar) {
+        openVehicleProfile(targetCar);
+
+        navigate(location.pathname, { replace: true, state: {} });
+      }
+    }
+  }, [customer, location.state]);
 
   const openEditCustomerModal = () => {
     setEditCustomerFormData({
@@ -1251,7 +1271,7 @@ export default function CustomerProfile() {
                 </label>
 
                 <label className="btn-gallery">
-                  {isUploading ? "⏳ Качване..." : "📁 От телефона"}
+                  {isUploading ? "⏳ Качване..." : "📁 От устройството"}
                   <input
                     type="file"
                     accept="image/*"
