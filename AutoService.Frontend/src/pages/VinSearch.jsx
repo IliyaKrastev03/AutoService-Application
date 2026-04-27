@@ -1,6 +1,23 @@
 import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import {
+  Archive,
+  Search,
+  History,
+  CarFront,
+  Settings,
+  User,
+  Phone,
+  Calendar,
+  Info,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  Printer,
+  X,
+  FileText,
+} from "lucide-react";
 import "./VinSearch.css";
 import "./CustomerProfile.css";
 
@@ -40,42 +57,68 @@ export default function VinSearch() {
     <div className="dashboard-layout">
       <Sidebar />
       <div className="dashboard-content">
-        <h1 className="vin-page-title">🗄️ Архив и Търсене по VIN</h1>
+        <h1 className="vin-page-title icon-text-flex">
+          <Archive size={32} /> Архив и Търсене по VIN
+        </h1>
 
         <div className="vin-search-container">
-          <p className="vin-page-subtitle">
-            Въведете VIN номер, за да проверите пълната сервизна история на
-            автомобила (включително архивирани коли и стари собственици).
+          <p className="vin-page-subtitle icon-text-flex-small">
+            <Info size={18} /> Въведете VIN номер, за да проверите пълната
+            сервизна история на автомобила (включително архивирани коли и стари
+            собственици).
           </p>
           <form className="search-box" onSubmit={handleSearch}>
-            <input
-              type="text"
-              className="vin-input"
-              placeholder="Напр. WBAXXXXXXXXXXXXXX"
-              value={vinQuery}
-              onChange={(e) => setVinQuery(e.target.value)}
-            />
-            <button type="submit" className="btn-search">
-              {isLoading ? "Търсене..." : "🔍 ТЪРСИ"}
+            <div className="vin-input-wrapper">
+              <Search size={20} className="vin-search-icon" />
+              <input
+                type="text"
+                className="vin-input has-icon"
+                placeholder="Напр. WBAXXXXXXXXXXXXXX"
+                value={vinQuery}
+                onChange={(e) => setVinQuery(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn-search icon-text-flex-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Clock className="spinner" size={18} /> Търсене...
+                </>
+              ) : (
+                <>
+                  <Search size={18} /> ТЪРСИ
+                </>
+              )}
             </button>
           </form>
-          {error && <p className="vin-error-msg">{error}</p>}
+          {error && (
+            <p className="vin-error-msg icon-text-flex">
+              <XCircle size={18} /> {error}
+            </p>
+          )}
         </div>
 
         {result && (
           <div className="modal-content size-xl vin-result-container">
             <div className="modal-header-flex">
-              <h2 className="modal-title-xl">
-                Паспорт на автомобила
+              <h2 className="modal-title-xl icon-text-flex">
+                <CarFront size={30} /> Паспорт на автомобила
                 {result.vehicle.isArchived && (
-                  <span className="archive-badge">АРХИВИРАН / ИЗТРИТ</span>
+                  <span className="archive-badge icon-text-flex">
+                    <Archive size={14} /> АРХИВИРАН / ИЗТРИТ
+                  </span>
                 )}
               </h2>
             </div>
 
             <div className="vehicle-profile-grid">
               <div className="info-card">
-                <h4>🚗 Основна информация</h4>
+                <h4 className="icon-text-flex">
+                  <Info size={20} /> Основна информация
+                </h4>
                 <p>
                   <strong>Марка и Модел:</strong> {result.vehicle.make}{" "}
                   {result.vehicle.model}
@@ -86,7 +129,8 @@ export default function VinSearch() {
                 <p>
                   <strong>Година:</strong> {result.vehicle.year}
                 </p>
-                <p>
+                <p className="icon-text-flex-small">
+                  <User size={16} />
                   <strong>
                     {result.vehicle.isArchived
                       ? "Последен собственик:"
@@ -97,7 +141,9 @@ export default function VinSearch() {
                 </p>
               </div>
               <div className="info-card">
-                <h4>⚙️ Технически спецификации</h4>
+                <h4 className="icon-text-flex">
+                  <Settings size={20} /> Технически спецификации
+                </h4>
                 <p>
                   <strong>VIN Номер:</strong> {result.vehicle.vin}
                 </p>
@@ -112,8 +158,8 @@ export default function VinSearch() {
 
             {result.ownershipHistory && result.ownershipHistory.length > 0 && (
               <div className="ownership-history-section">
-                <h3 className="vin-section-title">
-                  👥 История на собствеността
+                <h3 className="vin-section-title icon-text-flex">
+                  <History size={24} /> История на собствеността
                 </h3>
                 <div className="ownership-list">
                   {result.ownershipHistory.map((owner, index) => (
@@ -122,10 +168,14 @@ export default function VinSearch() {
                       className={`ownership-item ${owner.isCurrentOwner ? "current" : "past"}`}
                     >
                       <div className="ownership-status-icon">
-                        {owner.isCurrentOwner ? "🟢" : "🔴"}
+                        {owner.isCurrentOwner ? (
+                          <CheckCircle2 size={24} className="text-success" />
+                        ) : (
+                          <Clock size={24} className="text-muted" />
+                        )}
                       </div>
                       <div className="ownership-details">
-                        <h4 className="ownership-name">
+                        <h4 className="ownership-name icon-text-flex">
                           {owner.ownerName}
                           {owner.isCurrentOwner && (
                             <span className="current-badge">
@@ -133,14 +183,15 @@ export default function VinSearch() {
                             </span>
                           )}
                         </h4>
-                        <p className="ownership-phone">
-                          📞 {owner.ownerPhone || "Няма въведен телефон"}
+                        <p className="ownership-phone icon-text-flex-small">
+                          <Phone size={14} />{" "}
+                          {owner.ownerPhone || "Няма въведен телефон"}
                         </p>
-                        <p className="ownership-dates">
-                          🗓️ От:{" "}
+                        <p className="ownership-dates icon-text-flex-small">
+                          <Calendar size={14} /> От:{" "}
                           {new Date(owner.startDate).toLocaleDateString(
                             "bg-BG",
-                          )}{" "}
+                          )}
                           — До:{" "}
                           {owner.endDate
                             ? new Date(owner.endDate).toLocaleDateString(
@@ -157,8 +208,8 @@ export default function VinSearch() {
 
             <div className="service-history-section">
               <div className="history-header">
-                <h3 className="vin-section-title">
-                  🛠️ История на ремонтите (Справка)
+                <h3 className="vin-section-title icon-text-flex">
+                  <FileText size={24} /> История на ремонтите (Справка)
                 </h3>
               </div>
 
@@ -204,10 +255,10 @@ export default function VinSearch() {
                         </td>
                         <td>
                           <button
-                            className="action-btn-info"
+                            className="action-btn-info icon-text-flex-center"
                             onClick={() => openInfoModal(repair)}
                           >
-                            ℹ️ Виж детайли
+                            <Info size={14} /> Виж детайли
                           </button>
                         </td>
                       </tr>
@@ -232,14 +283,14 @@ export default function VinSearch() {
               id="printable-invoice"
             >
               <div className="modal-header-flex no-print">
-                <h2 className="modal-title-xl invoice-title">
-                  🧾 Детайли за ремонта (Справка)
+                <h2 className="modal-title-xl invoice-title icon-text-flex">
+                  <FileText size={32} /> Детайли за ремонта (Справка)
                 </h2>
                 <button
                   className="btn-close-modal"
                   onClick={() => setIsInfoModalOpen(false)}
                 >
-                  ✖
+                  <X size={28} />
                 </button>
               </div>
 
@@ -260,8 +311,8 @@ export default function VinSearch() {
 
               <div className="invoice-header-box">
                 <div className="invoice-info-group">
-                  <h4 className="invoice-info-title">
-                    👤 Данни за собственика по талон:
+                  <h4 className="invoice-info-title icon-text-flex">
+                    <User size={18} /> Данни за собственика по талон:
                   </h4>
                   <p className="invoice-info-text">
                     <strong>Име:</strong> {result.vehicle.customer?.firstName}{" "}
@@ -272,8 +323,8 @@ export default function VinSearch() {
                   </p>
                 </div>
                 <div className="invoice-info-group">
-                  <h4 className="invoice-info-title">
-                    🚗 Данни за автомобила:
+                  <h4 className="invoice-info-title icon-text-flex">
+                    <CarFront size={18} /> Данни за автомобила:
                   </h4>
                   <p className="invoice-info-text">
                     <strong>Модел:</strong> {result.vehicle.make}{" "}
@@ -292,7 +343,7 @@ export default function VinSearch() {
               </div>
 
               <p className="invoice-subtitle invoice-subtitle-large">
-                Извършена услуга / Ремонт:{" "}
+                Извършена услуга:{" "}
                 <strong className="invoice-strong">
                   {infoRepair.description}
                 </strong>
@@ -302,10 +353,10 @@ export default function VinSearch() {
                 <table className="invoice-table">
                   <thead>
                     <tr>
-                      <th>Вложена част</th>
-                      <th>ОЕМ / Номер</th>
-                      <th>Ед. Цена</th>
-                      <th>Количество</th>
+                      <th>Част</th>
+                      <th>OEM</th>
+                      <th>Цена</th>
+                      <th>К-во</th>
                       <th>Общо</th>
                     </tr>
                   </thead>
@@ -315,7 +366,7 @@ export default function VinSearch() {
                         <td>{p.name}</td>
                         <td>{p.partNumber || "-"}</td>
                         <td>{p.price.toFixed(2)} €</td>
-                        <td>{p.quantity} бр.</td>
+                        <td>{p.quantity}</td>
                         <td>{(p.price * p.quantity).toFixed(2)} €</td>
                       </tr>
                     ))}
@@ -323,19 +374,19 @@ export default function VinSearch() {
                 </table>
               ) : (
                 <p className="empty-parts-message">
-                  Няма вложени резервни части за този ремонт (Само труд).
+                  Няма вложени резервни части.
                 </p>
               )}
 
               <div className="totals-box totals-box-no-margin invoice-totals-border">
-                <p className="totals-text totals-text-large">
-                  Стойност Части: {infoRepair.partsCost.toFixed(2)} €
+                <p className="totals-text">
+                  Части: {infoRepair.partsCost.toFixed(2)} €
                 </p>
-                <p className="totals-text totals-text-large">
-                  Стойност Труд: {infoRepair.laborCost.toFixed(2)} €
+                <p className="totals-text">
+                  Труд: {infoRepair.laborCost.toFixed(2)} €
                 </p>
                 <h2 className="grand-total-print">
-                  КРАЙНА СУМА ЗА ПЛАЩАНЕ:{" "}
+                  ОБЩО:{" "}
                   {(infoRepair.partsCost + infoRepair.laborCost).toFixed(2)} €
                 </h2>
               </div>
@@ -350,10 +401,10 @@ export default function VinSearch() {
                 </button>
                 <button
                   type="button"
-                  className="btn-submit btn-submit-success btn-print-icon"
+                  className="btn-submit btn-submit-success icon-text-flex-center"
                   onClick={() => window.print()}
                 >
-                  🖨️ Разпечатай Копие
+                  <Printer size={20} /> Разпечатай Копие
                 </button>
               </div>
             </div>

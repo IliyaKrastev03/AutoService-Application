@@ -176,6 +176,26 @@
   background: #d35400;
 }
 
+.icon-text-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-text-flex-small {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.icon-text-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 @media (max-width: 768px) {
   .dashboard-content {
     padding-top: 65px;

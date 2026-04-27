@@ -3,6 +3,20 @@ import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import "./ManagerDashboard.css";
 import { useNavigate } from "react-router-dom";
+import {
+  ClipboardList,
+  Users,
+  UserSquare2,
+  Wrench,
+  Briefcase,
+  Search,
+  UserPlus,
+  KeyRound,
+  Trash2,
+  CarFront,
+  FolderOpen,
+  X,
+} from "lucide-react";
 
 export default function ManagerDashboard() {
   const [users, setUsers] = useState([]);
@@ -66,9 +80,7 @@ export default function ManagerDashboard() {
         commissionPercentage: formData.commissionPercentage,
         monthlySalary: formData.monthlySalary,
       });
-      alert(
-        "Служителят е добавен успешно! Изпратен му е имейл за задаване на парола.",
-      );
+      alert("Служителят е добавен успешно!");
       setIsModalOpen(false);
       setFormData({
         name: "",
@@ -80,11 +92,7 @@ export default function ManagerDashboard() {
       });
       fetchUsers();
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-          error.response?.data ||
-          "Грешка при създаването!",
-      );
+      alert(error.response?.data?.message || "Грешка!");
     }
   };
 
@@ -100,16 +108,12 @@ export default function ManagerDashboard() {
   };
 
   const handleResetPassword = async (id, name) => {
-    if (
-      window.confirm(
-        `Искате ли да изпратите линк за нова парола на имейла на: ${name}?`,
-      )
-    ) {
+    if (window.confirm(`Изпращане на линк за нова парола до: ${name}?`)) {
       try {
         await axios.post(`/api/Auth/reset-password/${id}`);
-        alert(`Изпратен е линк за смяна на паролата към имейла на ${name}!`);
+        alert("Линкът е изпратен!");
       } catch (error) {
-        alert("Грешка при изпращане на линка за парола.");
+        alert("Грешка!");
       }
     }
   };
@@ -129,7 +133,7 @@ export default function ManagerDashboard() {
       });
       fetchCustomers();
     } catch (error) {
-      alert("Грешка при създаване на клиент!");
+      alert("Грешка!");
     }
   };
 
@@ -139,12 +143,6 @@ export default function ManagerDashboard() {
       : role === "Manager" || role === "ManagerGTP"
         ? "role-manager"
         : "role-mechanic";
-
-  const totalUsers = users.length;
-  const totalMechanics = users.filter((u) => u.role === "Mechanic").length;
-  const totalManagers = users.filter(
-    (u) => u.role === "Manager" || u.role === "ManagerGTP",
-  ).length;
 
   const filteredUsers = users.filter((u) =>
     (u.name || u.username || "")
@@ -161,22 +159,22 @@ export default function ManagerDashboard() {
     <div className="dashboard-layout">
       <Sidebar />
       <div className="dashboard-content">
-        <h1 className="dashboard-header">
-          <span className="header-icon">📋</span> Управление
+        <h1 className="dashboard-header icon-text-flex">
+          <ClipboardList size={32} /> Управление
         </h1>
 
         <div className="tabs-container">
           <button
-            className={`tab-button ${activeTab === "employees" ? "active" : ""}`}
+            className={`tab-button icon-text-flex-center ${activeTab === "employees" ? "active" : ""}`}
             onClick={() => setActiveTab("employees")}
           >
-            🪪 Служители
+            <UserSquare2 size={20} /> Служители
           </button>
           <button
-            className={`tab-button ${activeTab === "customers" ? "active" : ""}`}
+            className={`tab-button icon-text-flex-center ${activeTab === "customers" ? "active" : ""}`}
             onClick={() => setActiveTab("customers")}
           >
-            📇 Клиенти и Автомобили
+            <Users size={20} /> Клиенти и Автомобили
           </button>
         </div>
 
@@ -184,24 +182,36 @@ export default function ManagerDashboard() {
           <>
             <div className="stats-grid">
               <div className="stat-card gray">
-                <span className="stat-icon">👥</span>
+                <span className="stat-icon">
+                  <Users size={32} />
+                </span>
                 <div className="stat-info">
                   <h4>Общо Служители</h4>
-                  <p>{totalUsers}</p>
+                  <p>{users.length}</p>
                 </div>
               </div>
               <div className="stat-card blue">
-                <span className="stat-icon">👨‍🔧</span>
+                <span className="stat-icon">
+                  <Wrench size={32} />
+                </span>
                 <div className="stat-info">
                   <h4>Механици</h4>
-                  <p>{totalMechanics}</p>
+                  <p>{users.filter((u) => u.role === "Mechanic").length}</p>
                 </div>
               </div>
               <div className="stat-card orange">
-                <span className="stat-icon">👔</span>
+                <span className="stat-icon">
+                  <Briefcase size={32} />
+                </span>
                 <div className="stat-info">
                   <h4>Управители</h4>
-                  <p>{totalManagers}</p>
+                  <p>
+                    {
+                      users.filter(
+                        (u) => u.role === "Manager" || u.role === "ManagerGTP",
+                      ).length
+                    }
+                  </p>
                 </div>
               </div>
             </div>
@@ -210,18 +220,21 @@ export default function ManagerDashboard() {
               <div className="card-header">
                 <h3 className="card-title">Списък със служители</h3>
                 <div className="action-row">
-                  <input
-                    type="text"
-                    placeholder="🔍 Търсене..."
-                    className="search-input"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+                  <div className="search-input-wrapper">
+                    <Search size={18} className="search-icon-inside" />
+                    <input
+                      type="text"
+                      placeholder="Търсене..."
+                      className="search-input has-icon"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
                   <button
-                    className="btn-add"
+                    className="btn-add icon-text-flex-center"
                     onClick={() => setIsModalOpen(true)}
                   >
-                    + ДОБАВИ СЛУЖИТЕЛ
+                    <UserPlus size={18} /> ДОБАВИ СЛУЖИТЕЛ
                   </button>
                 </div>
               </div>
@@ -267,28 +280,30 @@ export default function ManagerDashboard() {
                         )}
                       </td>
                       <td>
-                        <button
-                          className="btn-reset"
-                          onClick={() =>
-                            handleResetPassword(
-                              user.id,
-                              user.name || user.username,
-                            )
-                          }
-                        >
-                          🔑 Парола
-                        </button>
-                        <button
-                          className="btn-delete"
-                          onClick={() =>
-                            handleDeleteUser(
-                              user.id,
-                              user.name || user.username,
-                            )
-                          }
-                        >
-                          ✖ Изтрий
-                        </button>
+                        <div className="actions-wrapper">
+                          <button
+                            className="btn-reset icon-text-flex-center"
+                            onClick={() =>
+                              handleResetPassword(
+                                user.id,
+                                user.name || user.username,
+                              )
+                            }
+                          >
+                            <KeyRound size={16} /> Парола
+                          </button>
+                          <button
+                            className="btn-delete icon-text-flex-center"
+                            onClick={() =>
+                              handleDeleteUser(
+                                user.id,
+                                user.name || user.username,
+                              )
+                            }
+                          >
+                            <Trash2 size={16} /> Изтрий
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -303,18 +318,21 @@ export default function ManagerDashboard() {
             <div className="card-header">
               <h3 className="card-title">Списък с клиенти</h3>
               <div className="action-row">
-                <input
-                  type="text"
-                  placeholder="🔍 Търсене..."
-                  className="search-input"
-                  value={customerSearchTerm}
-                  onChange={(e) => setCustomerSearchTerm(e.target.value)}
-                />
+                <div className="search-input-wrapper">
+                  <Search size={18} className="search-icon-inside" />
+                  <input
+                    type="text"
+                    placeholder="Търсене..."
+                    className="search-input has-icon"
+                    value={customerSearchTerm}
+                    onChange={(e) => setCustomerSearchTerm(e.target.value)}
+                  />
+                </div>
                 <button
-                  className="btn-add"
+                  className="btn-add icon-text-flex-center"
                   onClick={() => setIsCustomerModalOpen(true)}
                 >
-                  + ДОБАВИ КЛИЕНТ
+                  <UserPlus size={18} /> ДОБАВИ КЛИЕНТ
                 </button>
               </div>
             </div>
@@ -339,21 +357,23 @@ export default function ManagerDashboard() {
                     </td>
                     <td>{customer.phone}</td>
                     <td>
-                      <span className="car-count-badge">
+                      <span className="car-count-badge icon-text-flex-center">
                         {
                           (customer.vehicles || []).filter((v) => !v.isArchived)
                             .length
-                        }{" "}
-                        🚗
+                        }
+                        <CarFront size={16} style={{ marginLeft: "4px" }} />
                       </span>
                     </td>
                     <td>
-                      <button
-                        className="btn-reset btn-profile"
-                        onClick={() => navigate(`/customer/${customer.id}`)}
-                      >
-                        📂 Досие
-                      </button>
+                      <div className="actions-wrapper">
+                        <button
+                          className="btn-reset btn-profile icon-text-flex-center"
+                          onClick={() => navigate(`/customer/${customer.id}`)}
+                        >
+                          <FolderOpen size={16} /> Досие
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -366,7 +386,15 @@ export default function ManagerDashboard() {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Добавяне на нов служител</h3>
+            <div className="modal-header-flex">
+              <h3>Добавяне на нов служител</h3>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
             <form onSubmit={handleAddUser}>
               <div className="form-group">
                 <label>Име:</label>
@@ -404,11 +432,10 @@ export default function ManagerDashboard() {
                   <option value="Admin">Админ</option>
                 </select>
               </div>
-
               {formData.role === "Mechanic" && (
                 <>
                   <div className="form-group">
-                    <label className="label-percentage">Тип заплащане:</label>
+                    <label>Тип заплащане:</label>
                     <select
                       value={formData.compensationType}
                       onChange={(e) =>
@@ -419,20 +446,15 @@ export default function ManagerDashboard() {
                       }
                       className="input-percentage"
                     >
-                      <option value="Percentage">
-                        На процент от труда (%)
-                      </option>
-                      <option value="Salary">Твърда месечна заплата</option>
+                      <option value="Percentage">На процент (%)</option>
+                      <option value="Salary">Твърда заплата</option>
                     </select>
                   </div>
-
                   {formData.compensationType === "Percentage" ? (
                     <div className="form-group">
-                      <label>Процент за механика (%):</label>
+                      <label>Процент (%):</label>
                       <input
                         type="number"
-                        min="0"
-                        max="100"
                         required
                         value={formData.commissionPercentage}
                         onChange={(e) =>
@@ -445,14 +467,10 @@ export default function ManagerDashboard() {
                     </div>
                   ) : (
                     <div className="form-group">
-                      <label className="label-salary">
-                        Месечна заплата (€):
-                      </label>
+                      <label>Заплата (€):</label>
                       <input
                         type="number"
-                        min="0"
                         required
-                        placeholder="Напр. 1500"
                         value={formData.monthlySalary}
                         onChange={(e) =>
                           setFormData({
@@ -460,7 +478,6 @@ export default function ManagerDashboard() {
                             monthlySalary: parseFloat(e.target.value),
                           })
                         }
-                        className="input-salary"
                       />
                     </div>
                   )}
@@ -486,7 +503,15 @@ export default function ManagerDashboard() {
       {isCustomerModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Добавяне на нов клиент</h3>
+            <div className="modal-header-flex">
+              <h3>Добавяне на нов клиент</h3>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsCustomerModalOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
             <form onSubmit={handleAddCustomer}>
               <div className="form-group">
                 <label>Име:</label>

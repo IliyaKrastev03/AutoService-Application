@@ -2,6 +2,35 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import {
+  ArrowLeft,
+  User,
+  Phone,
+  MapPin,
+  Edit,
+  Plus,
+  Bus,
+  CarFront,
+  FolderOpen,
+  Trash2,
+  AlertTriangle,
+  RefreshCw,
+  X,
+  Settings,
+  Wrench,
+  Timer,
+  Camera,
+  CheckCircle,
+  Info,
+  Banknote,
+  UserCog,
+  Save,
+  Receipt,
+  Printer,
+  Image as ImageIcon,
+  Lock,
+  Loader,
+} from "lucide-react";
 import "./CustomerProfile.css";
 
 export default function CustomerProfile() {
@@ -89,7 +118,6 @@ export default function CustomerProfile() {
 
       if (targetCar) {
         openVehicleProfile(targetCar);
-
         navigate(location.pathname, { replace: true, state: {} });
       }
     }
@@ -342,7 +370,9 @@ export default function CustomerProfile() {
       <div className="dashboard-layout">
         <Sidebar />
         <div className="dashboard-content">
-          <h2>⏳ Зареждане...</h2>
+          <h2 className="icon-text-flex">
+            <Loader size={30} className="spinner" /> Зареждане...
+          </h2>
         </div>
       </div>
     );
@@ -360,36 +390,53 @@ export default function CustomerProfile() {
     <div className="dashboard-layout">
       <Sidebar />
       <div className="dashboard-content">
-        <button className="btn-back" onClick={() => navigate("/manager")}>
-          🔙 Назад към списъка
+        <button
+          className="btn-back icon-text-flex"
+          onClick={() => navigate("/manager")}
+        >
+          <ArrowLeft size={20} /> Назад към списъка
         </button>
 
         <div className="profile-header profile-header-wrapper">
           <div className="profile-header-info">
-            <span className="profile-icon">👤</span>
+            <span className="profile-icon">
+              <User size={48} />
+            </span>
             <div>
               <h1 className="profile-name">
                 {customer.firstName} {customer.lastName}
               </h1>
-              <p className="profile-phone profile-phone-text">
-                📞 {customer.phone}{" "}
-                {customer.address && `| 📍 ${customer.address}`}
-              </p>
+              <div
+                className="profile-phone profile-phone-text icon-text-flex-small"
+                style={{ gap: "15px" }}
+              >
+                <span className="icon-text-flex">
+                  <Phone size={18} /> {customer.phone}
+                </span>
+                {customer.address && (
+                  <span className="icon-text-flex">
+                    <MapPin size={18} /> {customer.address}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           <button
-            className="btn-add btn-edit-customer"
+            className="btn-add btn-edit-customer icon-text-flex-center"
             onClick={openEditCustomerModal}
           >
-            ✏️ Редактирай Клиент
+            <Edit size={18} /> Редактирай Клиент
           </button>
         </div>
 
         <div className="card-container">
           <div className="card-header">
             <h3 className="card-title">Автомобили на клиента</h3>
-            <button className="btn-add" onClick={() => setIsCarModalOpen(true)}>
-              + ДОБАВИ АВТОМОБИЛ
+            <button
+              className="btn-add icon-text-flex-center"
+              onClick={() => setIsCarModalOpen(true)}
+            >
+              <Plus size={20} /> ДОБАВИ АВТОМОБИЛ
             </button>
           </div>
 
@@ -402,7 +449,11 @@ export default function CustomerProfile() {
               activeVehicles.map((car) => (
                 <div className="vehicle-card" key={car.id}>
                   <div className="vehicle-icon">
-                    {car.vehicleType === "Бус" ? "🚐" : "🚗"}
+                    {car.vehicleType === "Бус" ? (
+                      <Bus size={48} />
+                    ) : (
+                      <CarFront size={48} />
+                    )}
                   </div>
                   <h4 className="vehicle-make-model">
                     {car.make} {car.model}
@@ -411,19 +462,19 @@ export default function CustomerProfile() {
                   <p className="vehicle-year">Година: {car.year}</p>
 
                   <button
-                    className="btn-vehicle-info"
+                    className="btn-vehicle-info icon-text-flex-center"
                     onClick={() => openVehicleProfile(car)}
                   >
-                    📂 Пълно Досие
+                    <FolderOpen size={18} /> Пълно Досие
                   </button>
 
                   <button
-                    className="btn-remove-vehicle"
+                    className="btn-remove-vehicle icon-text-flex-center"
                     onClick={() =>
                       handleArchiveVehicle(car.id, car.make, car.model)
                     }
                   >
-                    🗑️ Премахни колата
+                    <Trash2 size={18} /> Премахни колата
                   </button>
                 </div>
               ))
@@ -443,7 +494,11 @@ export default function CustomerProfile() {
                   key={car.id}
                 >
                   <div className="vehicle-icon vehicle-icon-archived">
-                    {car.vehicleType === "Бус" ? "🚐" : "🚗"}
+                    {car.vehicleType === "Бус" ? (
+                      <Bus size={48} />
+                    ) : (
+                      <CarFront size={48} />
+                    )}
                   </div>
                   <h4 className="vehicle-make-model vehicle-make-model-archived">
                     {car.make} {car.model}
@@ -454,10 +509,10 @@ export default function CustomerProfile() {
                   <p className="vehicle-year">VIN: {car.vin}</p>
 
                   <button
-                    className="btn-vehicle-info"
+                    className="btn-vehicle-info icon-text-flex-center"
                     onClick={() => openVehicleProfile(car)}
                   >
-                    📂 Виж Сервизна История
+                    <FolderOpen size={18} /> Виж Сервизна История
                   </button>
                 </div>
               ))}
@@ -469,7 +524,9 @@ export default function CustomerProfile() {
       {isTransferModalOpen && (
         <div className="modal-overlay top-layer">
           <div className="modal-content size-md">
-            <h2 className="transfer-modal-title">⚠️ Намерен е съвпадащ VIN!</h2>
+            <h2 className="transfer-modal-title icon-text-flex">
+              <AlertTriangle size={28} /> Намерен е съвпадащ VIN!
+            </h2>
             <p className="transfer-modal-message">{transferData.message}</p>
             <p className="transfer-modal-info">
               Ако колата е сменила собственика си, можете да я прехвърлите към
@@ -486,10 +543,10 @@ export default function CustomerProfile() {
               </button>
               <button
                 type="button"
-                className="btn-submit btn-transfer-submit"
+                className="btn-submit btn-transfer-submit icon-text-flex-center"
                 onClick={handleTransferVehicle}
               >
-                🔄 Да, Прехвърли Колата
+                <RefreshCw size={18} /> Да, Прехвърли Колата
               </button>
             </div>
           </div>
@@ -499,7 +556,15 @@ export default function CustomerProfile() {
       {isEditCustomerModalOpen && (
         <div className="modal-overlay top-layer">
           <div className="modal-content">
-            <h3>Редактиране на клиент</h3>
+            <div className="modal-header-flex">
+              <h3>Редактиране на клиент</h3>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsEditCustomerModalOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
             <form onSubmit={handleEditCustomer}>
               <div className="form-group">
                 <label>Име:</label>
@@ -589,7 +654,15 @@ export default function CustomerProfile() {
       {isCarModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content size-md">
-            <h3>Добавяне на автомобил</h3>
+            <div className="modal-header-flex">
+              <h3>Добавяне на автомобил</h3>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsCarModalOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
             <form onSubmit={handleAddVehicle}>
               <div className="form-grid-2">
                 <div className="form-group">
@@ -735,7 +808,17 @@ export default function CustomerProfile() {
       {isRepairModalOpen && (
         <div className="modal-overlay top-layer">
           <div className="modal-content size-md">
-            <h3 className="modal-title-md">Въвеждане на ремонт</h3>
+            <div className="modal-header-flex">
+              <h3 className="modal-title-md icon-text-flex">
+                <Wrench size={24} /> Въвеждане на ремонт
+              </h3>
+              <button
+                className="btn-close-modal"
+                onClick={() => setIsRepairModalOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
             <form onSubmit={handleAddRepair}>
               <div className="form-grid-2">
                 <div className="form-group form-group-no-margin">
@@ -821,18 +904,22 @@ export default function CustomerProfile() {
         <div className="modal-overlay">
           <div className="modal-content size-xl">
             <div className="modal-header-flex">
-              <h2 className="modal-title-xl">Паспорт на автомобила</h2>
+              <h2 className="modal-title-xl icon-text-flex">
+                <FolderOpen size={30} /> Паспорт на автомобила
+              </h2>
               <button
                 className="btn-close-modal"
                 onClick={() => setIsVehicleModalOpen(false)}
               >
-                ✖
+                <X size={28} />
               </button>
             </div>
 
             <div className="vehicle-profile-grid">
               <div className="info-card">
-                <h4>🚗 Основна информация</h4>
+                <h4 className="icon-text-flex">
+                  <CarFront size={22} /> Основна информация
+                </h4>
                 <p>
                   <strong>Марка и Модел:</strong> {selectedVehicle.make}{" "}
                   {selectedVehicle.model}
@@ -845,7 +932,9 @@ export default function CustomerProfile() {
                 </p>
               </div>
               <div className="info-card">
-                <h4>⚙️ Технически спецификации</h4>
+                <h4 className="icon-text-flex">
+                  <Settings size={22} /> Технически спецификации
+                </h4>
                 <p>
                   <strong>VIN Номер:</strong> {selectedVehicle.vin}
                 </p>
@@ -864,15 +953,15 @@ export default function CustomerProfile() {
 
             <div className="service-history-section">
               <div className="history-header">
-                <h3 className="modal-title-xl history-title-large">
-                  🛠️ История на ремонтите
+                <h3 className="modal-title-xl history-title-large icon-text-flex">
+                  <Wrench size={28} /> История на ремонтите
                 </h3>
                 {isCurrentOwner && (
                   <button
-                    className="btn-add large-text"
+                    className="btn-add large-text icon-text-flex-center"
                     onClick={() => setIsRepairModalOpen(true)}
                   >
-                    + НОВ РЕМОНТ
+                    <Plus size={20} /> НОВ РЕМОНТ
                   </button>
                 )}
               </div>
@@ -907,9 +996,12 @@ export default function CustomerProfile() {
                         <br />
                         <strong>{repair.description}</strong>
                         {repair.workedHours > 0 || repair.workedMinutes > 0 ? (
-                          <div className="repair-worked-time">
-                            ⏱️ Изработено: {repair.workedHours}ч.{" "}
-                            {repair.workedMinutes}м.
+                          <div
+                            className="repair-worked-time icon-text-flex-small"
+                            style={{ marginTop: "5px" }}
+                          >
+                            <Timer size={16} /> Изработено: {repair.workedHours}
+                            ч. {repair.workedMinutes}м.
                           </div>
                         ) : null}
                       </td>
@@ -928,38 +1020,38 @@ export default function CustomerProfile() {
 
                         {isCurrentOwner && repair.status !== "Завършен" && (
                           <button
-                            className="action-btn-costing"
+                            className="action-btn-costing icon-text-flex-center"
                             onClick={() => openCostingModal(repair)}
                           >
-                            ✏️ Редактирай / Остойности
+                            <Edit size={16} /> Редактирай / Остойности
                           </button>
                         )}
 
                         {isCurrentOwner && (
                           <button
-                            className="action-btn-info btn-photos"
+                            className="action-btn-info btn-photos icon-text-flex-center"
                             onClick={() => openPhotoModal(repair)}
                           >
-                            📸 Снимки
+                            <Camera size={16} /> Снимки
                           </button>
                         )}
 
                         {isCurrentOwner &&
                           repair.status === "Остойностен (Чака плащане)" && (
                             <button
-                              className="action-btn-costing btn-pay-repair"
+                              className="action-btn-costing btn-pay-repair icon-text-flex-center"
                               onClick={() => handlePayRepair(repair.id)}
                             >
-                              ✅ Платено и Приключено
+                              <CheckCircle size={16} /> Платено и Приключено
                             </button>
                           )}
 
                         {repair.status === "Завършен" && (
                           <button
-                            className="action-btn-info"
+                            className="action-btn-info icon-text-flex-center"
                             onClick={() => openInfoModal(repair)}
                           >
-                            ℹ️ Виж фактурата
+                            <Info size={16} /> Виж фактурата
                           </button>
                         )}
                       </td>
@@ -984,8 +1076,8 @@ export default function CustomerProfile() {
       {isCostingModalOpen && costingRepair && (
         <div className="modal-overlay top-layer">
           <div className="modal-content size-xl">
-            <h2 className="modal-title-xl modal-title-margin">
-              💰 Фактуриране и Части
+            <h2 className="modal-title-xl modal-title-margin icon-text-flex">
+              <Banknote size={32} /> Фактуриране и Части
             </h2>
             <p className="modal-subtitle-text">
               Ремонт: <strong>{costingRepair.description}</strong>
@@ -995,10 +1087,10 @@ export default function CustomerProfile() {
               <div className="parts-container">
                 <button
                   type="button"
-                  className="btn-add-part"
+                  className="btn-add-part icon-text-flex-center"
                   onClick={handleAddPartRow}
                 >
-                  ➕ Добави нова част
+                  <Plus size={18} /> Добави нова част
                 </button>
                 {partsList.length > 0 && (
                   <div className="part-row part-row-header">
@@ -1055,18 +1147,18 @@ export default function CustomerProfile() {
                     />
                     <button
                       type="button"
-                      className="btn-remove-part"
+                      className="btn-remove-part flex-center-btn"
                       onClick={() => handleRemovePartRow(index)}
                     >
-                      ✖
+                      <X size={20} />
                     </button>
                   </div>
                 ))}
               </div>
 
               <div className="form-group labor-cost-group">
-                <label className="labor-cost-label">
-                  👨‍🔧 Цена за Труд Общо (€):
+                <label className="labor-cost-label icon-text-flex">
+                  <UserCog size={22} /> Цена за Труд Общо (€):
                 </label>
                 <input
                   type="number"
@@ -1097,8 +1189,11 @@ export default function CustomerProfile() {
                 >
                   Отказ
                 </button>
-                <button type="submit" className="btn-submit btn-submit-success">
-                  💾 ЗАПАЗИ И ОСТОЙНОСТИ
+                <button
+                  type="submit"
+                  className="btn-submit btn-submit-success icon-text-flex-center"
+                >
+                  <Save size={20} /> ЗАПАЗИ И ОСТОЙНОСТИ
                 </button>
               </div>
             </form>
@@ -1113,14 +1208,14 @@ export default function CustomerProfile() {
             id="printable-invoice"
           >
             <div className="modal-header-flex no-print">
-              <h2 className="modal-title-xl invoice-title">
-                🧾 Детайли за ремонта (Фактура)
+              <h2 className="modal-title-xl invoice-title icon-text-flex">
+                <Receipt size={32} /> Детайли за ремонта (Фактура)
               </h2>
               <button
                 className="btn-close-modal"
                 onClick={() => setIsInfoModalOpen(false)}
               >
-                ✖
+                <X size={28} />
               </button>
             </div>
 
@@ -1139,7 +1234,9 @@ export default function CustomerProfile() {
 
             <div className="invoice-header-box">
               <div className="invoice-info-group">
-                <h4 className="invoice-info-title">👤 Данни за клиента:</h4>
+                <h4 className="invoice-info-title icon-text-flex">
+                  <User size={20} /> Данни за клиента:
+                </h4>
                 <p className="invoice-info-text">
                   <strong>Име:</strong> {customer.firstName} {customer.lastName}
                 </p>
@@ -1153,7 +1250,9 @@ export default function CustomerProfile() {
                 )}
               </div>
               <div className="invoice-info-group">
-                <h4 className="invoice-info-title">🚗 Данни за автомобила:</h4>
+                <h4 className="invoice-info-title icon-text-flex">
+                  <CarFront size={20} /> Данни за автомобила:
+                </h4>
                 <p className="invoice-info-text">
                   <strong>Модел:</strong> {selectedVehicle.make}{" "}
                   {selectedVehicle.model} ({selectedVehicle.year} г.)
@@ -1229,10 +1328,10 @@ export default function CustomerProfile() {
               </button>
               <button
                 type="button"
-                className="btn-submit btn-submit-success btn-print-icon"
+                className="btn-submit btn-submit-success btn-print-icon icon-text-flex-center"
                 onClick={() => window.print()}
               >
-                🖨️ Разпечатай Бележка
+                <Printer size={20} /> Разпечатай Бележка
               </button>
             </div>
           </div>
@@ -1243,12 +1342,14 @@ export default function CustomerProfile() {
         <div className="modal-overlay top-layer">
           <div className="modal-content size-md">
             <div className="modal-header-flex">
-              <h2 className="modal-title-md">📸 Снимки към ремонт</h2>
+              <h2 className="modal-title-md icon-text-flex">
+                <Camera size={26} /> Снимки към ремонт
+              </h2>
               <button
                 className="btn-close-modal"
                 onClick={() => setIsPhotoModalOpen(false)}
               >
-                ✖
+                <X size={26} />
               </button>
             </div>
 
@@ -1258,8 +1359,16 @@ export default function CustomerProfile() {
 
             {photoRepair.status !== "Завършен" ? (
               <div className="photo-buttons-container">
-                <label className="btn-camera">
-                  {isUploading ? "⏳ Качване..." : "📷 Снимай сега"}
+                <label className="btn-camera icon-text-flex-center">
+                  {isUploading ? (
+                    <>
+                      <Loader size={20} className="spinner" /> Качване...
+                    </>
+                  ) : (
+                    <>
+                      <Camera size={20} /> Снимай сега
+                    </>
+                  )}
                   <input
                     type="file"
                     accept="image/*"
@@ -1270,8 +1379,16 @@ export default function CustomerProfile() {
                   />
                 </label>
 
-                <label className="btn-gallery">
-                  {isUploading ? "⏳ Качване..." : "📁 От устройството"}
+                <label className="btn-gallery icon-text-flex-center">
+                  {isUploading ? (
+                    <>
+                      <Loader size={20} className="spinner" /> Качване...
+                    </>
+                  ) : (
+                    <>
+                      <ImageIcon size={20} /> От устройството
+                    </>
+                  )}
                   <input
                     type="file"
                     accept="image/*"
@@ -1283,14 +1400,15 @@ export default function CustomerProfile() {
               </div>
             ) : (
               <p
-                className="status-badge completed"
+                className="status-badge completed icon-text-flex-center"
                 style={{
-                  display: "block",
-                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
                   marginBottom: "20px",
                 }}
               >
-                🔒 Ремонтът е приключен. Снимките са само за преглед.
+                <Lock size={18} /> Ремонтът е приключен. Снимките са само за
+                преглед.
               </p>
             )}
 

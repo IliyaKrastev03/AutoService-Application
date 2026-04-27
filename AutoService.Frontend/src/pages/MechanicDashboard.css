@@ -1,120 +1,137 @@
 .mechanic-header {
-  background: #34495e;
+  background: #1e293b;
   color: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 25px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .mechanic-header-title {
   margin: 0;
+  font-size: 28px;
+  font-weight: 800;
 }
 
 .mechanic-header-subtitle {
   margin: 5px 0 0 0;
-  color: #bdc3c7;
+  color: #94a3b8;
+  font-size: 16px;
 }
 
 .mechanic-header-stats {
-  font-size: 20px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.empty-message-large {
+.empty-message-box {
   text-align: center;
-  padding: 50px;
+  padding: 60px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   font-size: 20px;
+  color: #64748b;
 }
 
 .mechanic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 25px;
 }
 
 .task-card {
   background: white;
-  border-top: 5px solid #3498db;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  border-color: #3b82f6;
 }
 
 .task-card h2 {
-  margin: 0 0 10px 0;
-  color: #2c3e50;
-  font-size: 24px;
+  margin: 0 0 15px 0;
+  color: #0f172a;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.task-plate-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .task-plate {
   display: inline-block;
-  background: #ecf0f1;
-  border: 2px solid #bdc3c7;
-  padding: 5px 12px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 15px;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 18px;
+  color: #1e293b;
+  letter-spacing: 1px;
+}
+
+.task-year {
+  color: #64748b;
+  font-weight: 600;
 }
 
 .task-details p {
-  font-size: 16px;
-  margin: 8px 0;
-  color: #34495e;
-}
-
-.text-danger {
-  color: #e74c3c;
+  font-size: 15px;
+  margin: 10px 0;
+  color: #334155;
 }
 
 .task-description-box {
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 5px;
-  border-left: 3px solid #3498db;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+  margin-top: 15px;
+}
+
+.description-text {
+  margin-top: 5px !important;
+  line-height: 1.5;
+  color: #1e293b;
 }
 
 .btn-complete-task {
   width: 100%;
-  background: #27ae60;
+  background: #10b981;
   color: white;
   border: none;
-  padding: 12px;
+  padding: 15px;
   font-size: 16px;
-  font-weight: bold;
-  border-radius: 5px;
-  margin-top: 20px;
+  font-weight: 800;
+  border-radius: 8px;
+  margin-top: 25px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-complete-task:hover {
-  background: #219653;
-}
-
-.modal-subtitle {
-  margin-bottom: 20px;
-  color: #7f8c8d;
-}
-
-.time-inputs-flex {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.btn-submit-success {
-  background: #27ae60;
-}
-
-.btn-submit-success:hover {
-  background: #219653;
+  background: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .mechanic-stats-container {
@@ -126,69 +143,61 @@
 .mechanic-stat-card {
   flex: 1;
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.green-border {
-  border-left: 5px solid #27ae60;
-}
-
-.blue-border {
-  border-left: 5px solid #3498db;
-}
-
-.mechanic-stat-label {
-  margin: 0;
-  color: #7f8c8d;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: bold;
+.icon-text-flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .mechanic-stat-value {
-  margin: 5px 0 0 0;
-  font-size: 28px;
-}
-
-.green-text {
-  color: #27ae60;
-}
-
-.dark-text {
-  color: #2c3e50;
+  margin: 10px 0;
+  font-size: 32px;
+  font-weight: 800;
 }
 
 .mechanic-stat-footer {
-  margin: 5px 0 0 0;
-  font-size: 12px;
-  color: #95a5a6;
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.text-white {
+  color: white;
+}
+.text-primary {
+  color: #3b82f6;
+}
+.text-success {
+  color: #10b981;
 }
 
 @media (max-width: 768px) {
-  .dashboard-content {
-    padding-top: 65px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   .mechanic-header {
     flex-direction: column;
+    padding: 20px;
     align-items: flex-start;
-    gap: 10px;
   }
 
-  .mechanic-stats-container {
-    flex-direction: column;
+  .mechanic-header-stats {
+    margin-top: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
   }
 
   .mechanic-grid {
     grid-template-columns: 1fr;
   }
 
-  .time-inputs-flex {
+  .mechanic-stats-container {
     flex-direction: column;
-    gap: 10px;
   }
 }

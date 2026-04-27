@@ -1,11 +1,11 @@
 .sidebar-container {
-  width: 250px;
+  width: 270px;
   height: 100vh;
   background-color: #2c3e50;
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 25px 20px;
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -16,13 +16,17 @@
 
 .sidebar-title {
   border-bottom: 1px solid #34495e;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 26px;
 }
 
 .sidebar-role {
-  color: white;
-  font-size: 20px;
+  color: #bdc3c7;
+  font-size: 18px;
   margin-bottom: 30px;
 }
 
@@ -34,23 +38,31 @@
 }
 
 .sidebar-link {
-  color: white;
+  color: #ecf0f1;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 19px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: color 0.3s ease;
+  gap: 14px;
+  transition: all 0.3s ease;
+  padding: 10px 0;
 }
 
 .sidebar-icon {
-  font-size: 24px;
-  width: 35px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 30px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 .sidebar-link:hover {
+  color: #3498db;
+}
+
+.sidebar-link:hover .sidebar-icon {
+  opacity: 1;
   color: #3498db;
 }
 
@@ -58,12 +70,17 @@
   background-color: #e74c3c;
   color: white;
   border: none;
-  padding: 12px;
+  padding: 15px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 6px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar-logout-btn:hover {
@@ -76,7 +93,9 @@
 
 @media (max-width: 768px) {
   .mobile-toggle-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     top: 15px;
     left: 15px;
@@ -84,9 +103,8 @@
     background-color: #2c3e50;
     color: white;
     border: none;
-    padding: 8px 15px;
-    font-size: 24px;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 6px;
     cursor: pointer;
   }
 

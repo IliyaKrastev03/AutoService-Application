@@ -2,6 +2,20 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import {
+  ClipboardList,
+  Clock,
+  Settings,
+  Banknote,
+  CarFront,
+  User,
+  Tag,
+  AlertTriangle,
+  Wrench,
+  UserCog,
+  Timer,
+  FolderOpen,
+} from "lucide-react";
 import "./ServiceDashboard.css";
 
 export default function ServiceDashboard() {
@@ -61,12 +75,16 @@ export default function ServiceDashboard() {
     <div className="dashboard-layout">
       <Sidebar />
       <div className="dashboard-content">
-        <h1 className="service-title">📋 Сервизен График (Активни ремонти)</h1>
+        <h1 className="service-title icon-text-flex">
+          <ClipboardList size={32} /> Сервизен График (Активни ремонти)
+        </h1>
 
         <div className="kanban-board">
           <div className="kanban-column">
             <h3 className="column-header warning">
-              <span>🟡 Чакащи</span>
+              <span className="icon-text-flex">
+                <Clock size={22} /> Чакащи
+              </span>
               <span className="count-badge">{waitingRepairs.length}</span>
             </h3>
 
@@ -76,32 +94,35 @@ export default function ServiceDashboard() {
 
             {waitingRepairs.map((repair) => (
               <div className="repair-card status-waiting" key={repair.id}>
-                <h4>
-                  🚗 {repair.vehicle?.make} {repair.vehicle?.model}
+                <h4 className="icon-text-flex">
+                  <CarFront size={22} /> {repair.vehicle?.make}{" "}
+                  {repair.vehicle?.model}
                 </h4>
                 <div className="plate-badge-small">
                   {repair.vehicle?.licensePlate}
                 </div>
-                <p>
-                  <strong>👤 Клиент:</strong>{" "}
+                <p className="icon-text-flex-small">
+                  <User size={18} /> <strong>Клиент:</strong>{" "}
                   {repair.vehicle?.customer?.firstName}{" "}
                   {repair.vehicle?.customer?.lastName}
                 </p>
-                <p>
-                  <strong>📋 Тип:</strong> {repair.repairType}
+                <p className="icon-text-flex-small">
+                  <Tag size={18} /> <strong>Тип:</strong> {repair.repairType}
                 </p>
                 {repair.complaint && (
-                  <p className="complaint-text">
-                    <strong>⚠️ Оплакване:</strong> {repair.complaint}
+                  <p className="complaint-text icon-text-flex-small">
+                    <AlertTriangle size={18} /> <strong>Оплакване:</strong>{" "}
+                    {repair.complaint}
                   </p>
                 )}
-                <p>
-                  <strong>🛠️ Действия:</strong> {repair.description}
+                <p className="icon-text-flex-small">
+                  <Wrench size={18} /> <strong>Действия:</strong>{" "}
+                  {repair.description}
                 </p>
 
                 <div className="assign-box">
-                  <label className="assign-label">
-                    👨‍🔧 Възложи на служител:
+                  <label className="assign-label icon-text-flex-small">
+                    <UserCog size={18} /> Възложи на служител:
                   </label>
                   <select
                     className="assign-select"
@@ -120,14 +141,14 @@ export default function ServiceDashboard() {
                 </div>
 
                 <button
-                  className="btn-open-repair"
+                  className="btn-open-repair icon-text-flex-center"
                   onClick={() =>
                     navigate(`/customer/${repair.vehicle?.customerId}`, {
                       state: { autoOpenVehicleId: repair.vehicleId },
                     })
                   }
                 >
-                  Отвори досието
+                  <FolderOpen size={20} /> Отвори досието
                 </button>
               </div>
             ))}
@@ -135,7 +156,9 @@ export default function ServiceDashboard() {
 
           <div className="kanban-column">
             <h3 className="column-header info">
-              <span>🔵 В процес</span>
+              <span className="icon-text-flex">
+                <Settings size={22} /> В процес
+              </span>
               <span className="count-badge">{inProgressRepairs.length}</span>
             </h3>
 
@@ -145,32 +168,34 @@ export default function ServiceDashboard() {
 
             {inProgressRepairs.map((repair) => (
               <div className="repair-card status-progress" key={repair.id}>
-                <h4>
-                  🚗 {repair.vehicle?.make} {repair.vehicle?.model}
+                <h4 className="icon-text-flex">
+                  <CarFront size={22} /> {repair.vehicle?.make}{" "}
+                  {repair.vehicle?.model}
                 </h4>
                 <div className="plate-badge-small">
                   {repair.vehicle?.licensePlate}
                 </div>
-                <p>
-                  <strong>📋 Тип:</strong> {repair.repairType}
+                <p className="icon-text-flex-small">
+                  <Tag size={18} /> <strong>Тип:</strong> {repair.repairType}
                 </p>
-                <p>
-                  <strong>🛠️ Действия:</strong> {repair.description}
+                <p className="icon-text-flex-small">
+                  <Wrench size={18} /> <strong>Действия:</strong>{" "}
+                  {repair.description}
                 </p>
 
-                <p className="mechanic-assigned-badge">
-                  👨‍🔧 Работи: {repair.mechanicId}
+                <p className="mechanic-assigned-badge icon-text-flex-small">
+                  <UserCog size={18} /> Работи: {repair.mechanicId}
                 </p>
 
                 <button
-                  className="btn-open-repair"
+                  className="btn-open-repair icon-text-flex-center"
                   onClick={() =>
                     navigate(`/customer/${repair.vehicle?.customerId}`, {
                       state: { autoOpenVehicleId: repair.vehicleId },
                     })
                   }
                 >
-                  Отвори досието
+                  <FolderOpen size={20} /> Отвори досието
                 </button>
               </div>
             ))}
@@ -178,7 +203,9 @@ export default function ServiceDashboard() {
 
           <div className="kanban-column">
             <h3 className="column-header success">
-              <span>🟠 Чакат Цена</span>
+              <span className="icon-text-flex">
+                <Banknote size={22} /> Чакат Цена
+              </span>
               <span className="count-badge">{finishedRepairs.length}</span>
             </h3>
 
@@ -190,32 +217,33 @@ export default function ServiceDashboard() {
 
             {finishedRepairs.map((repair) => (
               <div className="repair-card status-finished" key={repair.id}>
-                <h4>
-                  🚗 {repair.vehicle?.make} {repair.vehicle?.model}
+                <h4 className="icon-text-flex">
+                  <CarFront size={22} /> {repair.vehicle?.make}{" "}
+                  {repair.vehicle?.model}
                 </h4>
                 <div className="plate-badge-small">
                   {repair.vehicle?.licensePlate}
                 </div>
-                <p>
-                  <strong>👤 Клиент:</strong>{" "}
+                <p className="icon-text-flex-small">
+                  <User size={18} /> <strong>Клиент:</strong>{" "}
                   {repair.vehicle?.customer?.firstName}{" "}
                   {repair.vehicle?.customer?.lastName}
                 </p>
 
-                <p className="worked-time-badge">
-                  ⏱️ Изработено време: <br /> {repair.workedHours} ч. и{" "}
+                <p className="worked-time-badge icon-text-flex-small">
+                  <Timer size={18} /> Изработено: {repair.workedHours} ч.{" "}
                   {repair.workedMinutes} мин.
                 </p>
 
                 <button
-                  className="btn-open-repair btn-evaluate"
+                  className="btn-open-repair btn-evaluate icon-text-flex-center"
                   onClick={() =>
                     navigate(`/customer/${repair.vehicle?.customerId}`, {
                       state: { autoOpenVehicleId: repair.vehicleId },
                     })
                   }
                 >
-                  💰 Отвори и Остойности
+                  <Banknote size={20} /> Отвори и Остойности
                 </button>
               </div>
             ))}
