@@ -102,7 +102,7 @@ export default function VinSearch() {
         </div>
 
         {result && (
-          <div className="modal-content size-xl vin-result-container">
+          <div className="vin-result-container">
             <div className="modal-header-flex">
               <h2 className="modal-title-xl icon-text-flex">
                 <CarFront size={30} /> Паспорт на автомобила
@@ -213,65 +213,68 @@ export default function VinSearch() {
                 </h3>
               </div>
 
-              <table className="custom-table">
-                <thead>
-                  <tr>
-                    <th>Дата</th>
-                    <th>Описание</th>
-                    <th>Километри</th>
-                    <th>Обща Цена</th>
-                    <th>Статус</th>
-                    <th>Детайли</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {result.repairs.length > 0 ? (
-                    result.repairs.map((repair) => (
-                      <tr key={repair.id}>
-                        <td>
-                          {new Date(repair.createdAt).toLocaleDateString(
-                            "bg-BG",
-                          )}
-                        </td>
-                        <td>
-                          <span className="repair-type-badge">
-                            {repair.repairType}
-                          </span>
-                          <br />
-                          <strong>{repair.description}</strong>
-                        </td>
-                        <td>{repair.mileage} км</td>
-                        <td>
-                          <strong>
-                            {(repair.partsCost + repair.laborCost).toFixed(2)} €
-                          </strong>
-                        </td>
-                        <td>
-                          <span
-                            className={`status-badge ${repair.status === "Завършен" ? "completed" : "pending"}`}
-                          >
-                            {repair.status}
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            className="action-btn-info icon-text-flex-center"
-                            onClick={() => openInfoModal(repair)}
-                          >
-                            <Info size={14} /> Виж детайли
-                          </button>
+              <div className="table-responsive">
+                <table className="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Дата</th>
+                      <th>Описание</th>
+                      <th>Километри</th>
+                      <th>Обща Цена</th>
+                      <th>Статус</th>
+                      <th>Детайли</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.repairs.length > 0 ? (
+                      result.repairs.map((repair) => (
+                        <tr key={repair.id}>
+                          <td>
+                            {new Date(repair.createdAt).toLocaleDateString(
+                              "bg-BG",
+                            )}
+                          </td>
+                          <td>
+                            <span className="repair-type-badge">
+                              {repair.repairType}
+                            </span>
+                            <br />
+                            <strong>{repair.description}</strong>
+                          </td>
+                          <td>{repair.mileage} км</td>
+                          <td>
+                            <strong>
+                              {(repair.partsCost + repair.laborCost).toFixed(2)}{" "}
+                              €
+                            </strong>
+                          </td>
+                          <td>
+                            <span
+                              className={`status-badge ${repair.status === "Завършен" ? "completed" : "pending"}`}
+                            >
+                              {repair.status}
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="action-btn-info icon-text-flex-center"
+                              onClick={() => openInfoModal(repair)}
+                            >
+                              <Info size={14} /> Виж детайли
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6" className="empty-table-cell">
+                          Няма записани ремонти за този автомобил.
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="empty-table-cell">
-                        Няма записани ремонти за този автомобил.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
@@ -350,28 +353,30 @@ export default function VinSearch() {
               </p>
 
               {infoRepair.parts && infoRepair.parts.length > 0 ? (
-                <table className="invoice-table">
-                  <thead>
-                    <tr>
-                      <th>Част</th>
-                      <th>OEM</th>
-                      <th>Цена</th>
-                      <th>К-во</th>
-                      <th>Общо</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {infoRepair.parts.map((p, i) => (
-                      <tr key={i}>
-                        <td>{p.name}</td>
-                        <td>{p.partNumber || "-"}</td>
-                        <td>{p.price.toFixed(2)} €</td>
-                        <td>{p.quantity}</td>
-                        <td>{(p.price * p.quantity).toFixed(2)} €</td>
+                <div className="table-responsive">
+                  <table className="invoice-table custom-table">
+                    <thead>
+                      <tr>
+                        <th>Част</th>
+                        <th>OEM</th>
+                        <th>Цена</th>
+                        <th>К-во</th>
+                        <th>Общо</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {infoRepair.parts.map((p, i) => (
+                        <tr key={i}>
+                          <td>{p.name}</td>
+                          <td>{p.partNumber || "-"}</td>
+                          <td>{p.price.toFixed(2)} €</td>
+                          <td>{p.quantity}</td>
+                          <td>{(p.price * p.quantity).toFixed(2)} €</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               ) : (
                 <p className="empty-parts-message">
                   Няма вложени резервни части.

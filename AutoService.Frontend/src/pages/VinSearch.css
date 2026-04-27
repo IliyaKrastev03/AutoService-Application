@@ -192,4 +192,16 @@
   .ownership-item {
     align-items: flex-start;
   }
+
+  .vin-result-container {
+    padding: 15px;
+    max-width: calc(100vw - 30px);
+    overflow-x: hidden;
+  }
+
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }

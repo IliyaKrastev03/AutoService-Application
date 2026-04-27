@@ -972,93 +972,98 @@ export default function CustomerProfile() {
                   само да разглеждате сервизната му история.
                 </p>
               )}
-
-              <table className="custom-table">
-                <thead>
-                  <tr>
-                    <th>Дата</th>
-                    <th>Описание</th>
-                    <th>Километри</th>
-                    <th>Обща Цена</th>
-                    <th>Статус / Действие</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vehicleRepairs.map((repair) => (
-                    <tr key={repair.id}>
-                      <td>
-                        {new Date(repair.createdAt).toLocaleDateString("bg-BG")}
-                      </td>
-                      <td>
-                        <span className="repair-type-badge">
-                          {repair.repairType}
-                        </span>
-                        <br />
-                        <strong>{repair.description}</strong>
-                        {repair.workedHours > 0 || repair.workedMinutes > 0 ? (
-                          <div
-                            className="repair-worked-time icon-text-flex-small"
-                            style={{ marginTop: "5px" }}
-                          >
-                            <Timer size={16} /> Изработено: {repair.workedHours}
-                            ч. {repair.workedMinutes}м.
-                          </div>
-                        ) : null}
-                      </td>
-                      <td>{repair.mileage} км</td>
-                      <td>
-                        <strong>
-                          {(repair.partsCost + repair.laborCost).toFixed(2)} €
-                        </strong>
-                      </td>
-                      <td>
-                        <span
-                          className={`status-badge ${repair.status === "Завършен" ? "completed" : "pending"}`}
-                        >
-                          {repair.status}
-                        </span>
-
-                        {isCurrentOwner && repair.status !== "Завършен" && (
-                          <button
-                            className="action-btn-costing icon-text-flex-center"
-                            onClick={() => openCostingModal(repair)}
-                          >
-                            <Edit size={16} /> Редактирай / Остойности
-                          </button>
-                        )}
-
-                        {isCurrentOwner && (
-                          <button
-                            className="action-btn-info btn-photos icon-text-flex-center"
-                            onClick={() => openPhotoModal(repair)}
-                          >
-                            <Camera size={16} /> Снимки
-                          </button>
-                        )}
-
-                        {isCurrentOwner &&
-                          repair.status === "Остойностен (Чака плащане)" && (
-                            <button
-                              className="action-btn-costing btn-pay-repair icon-text-flex-center"
-                              onClick={() => handlePayRepair(repair.id)}
+              <div className="table-responsive">
+                <table className="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Дата</th>
+                      <th>Описание</th>
+                      <th>Километри</th>
+                      <th>Обща Цена</th>
+                      <th>Статус / Действие</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vehicleRepairs.map((repair) => (
+                      <tr key={repair.id}>
+                        <td>
+                          {new Date(repair.createdAt).toLocaleDateString(
+                            "bg-BG",
+                          )}
+                        </td>
+                        <td>
+                          <span className="repair-type-badge">
+                            {repair.repairType}
+                          </span>
+                          <br />
+                          <strong>{repair.description}</strong>
+                          {repair.workedHours > 0 ||
+                          repair.workedMinutes > 0 ? (
+                            <div
+                              className="repair-worked-time icon-text-flex-small"
+                              style={{ marginTop: "5px" }}
                             >
-                              <CheckCircle size={16} /> Платено и Приключено
+                              <Timer size={16} /> Изработено:{" "}
+                              {repair.workedHours}
+                              ч. {repair.workedMinutes}м.
+                            </div>
+                          ) : null}
+                        </td>
+                        <td>{repair.mileage} км</td>
+                        <td>
+                          <strong>
+                            {(repair.partsCost + repair.laborCost).toFixed(2)} €
+                          </strong>
+                        </td>
+                        <td>
+                          <span
+                            className={`status-badge ${repair.status === "Завършен" ? "completed" : "pending"}`}
+                          >
+                            {repair.status}
+                          </span>
+
+                          {isCurrentOwner && repair.status !== "Завършен" && (
+                            <button
+                              className="action-btn-costing icon-text-flex-center"
+                              onClick={() => openCostingModal(repair)}
+                            >
+                              <Edit size={16} /> Редактирай / Остойности
                             </button>
                           )}
 
-                        {repair.status === "Завършен" && (
-                          <button
-                            className="action-btn-info icon-text-flex-center"
-                            onClick={() => openInfoModal(repair)}
-                          >
-                            <Info size={16} /> Виж фактурата
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          {isCurrentOwner && (
+                            <button
+                              className="action-btn-info btn-photos icon-text-flex-center"
+                              onClick={() => openPhotoModal(repair)}
+                            >
+                              <Camera size={16} /> Снимки
+                            </button>
+                          )}
+
+                          {isCurrentOwner &&
+                            repair.status === "Остойностен (Чака плащане)" && (
+                              <button
+                                className="action-btn-costing btn-pay-repair icon-text-flex-center"
+                                onClick={() => handlePayRepair(repair.id)}
+                              >
+                                <CheckCircle size={16} /> Платено и Приключено
+                              </button>
+                            )}
+
+                          {repair.status === "Завършен" && (
+                            <button
+                              className="action-btn-info icon-text-flex-center"
+                              onClick={() => openInfoModal(repair)}
+                            >
+                              <Info size={16} /> Виж фактурата
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div className="modal-actions spaced">
               <button
