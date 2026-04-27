@@ -184,22 +184,51 @@
 }
 
 @media (max-width: 768px) {
-  .report-grid {
-    grid-template-columns: 1fr;
+  .accounting-container {
+    padding: 10px;
+    padding-top: 80px;
   }
 
   .dashboard-header-flex {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 15px;
   }
 
   .filter-group {
     width: 100%;
+    flex-direction: column;
   }
 
   .filter-select-wrapper,
   .filter-select {
     width: 100%;
+  }
+
+  .report-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .report-header {
+    padding: 12px 15px;
+    font-size: 16px;
+  }
+
+  .report-body {
+    padding: 15px;
+  }
+
+  .report-row.total {
+    font-size: 18px;
+  }
+
+  .chart-box {
+    overflow-x: auto;
+    padding: 10px;
+  }
+
+  .chart-box table {
+    min-width: 500px;
   }
 }
